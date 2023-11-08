@@ -6,11 +6,11 @@ This web-based application, developed using Python and the Django framework, aim
 
 ## Technologies Used
 
-[] Python
-[] Django
+- Python
+- Django
 
 ## Getting Started
 
 ![Trello](https://trello.com/b/ngL6X2Is/glow)
 
-[WireFrames] (karat/Untitled Diagram.drawio.png)
+[Image] (karat/Untitled Diagram.drawio.png)
