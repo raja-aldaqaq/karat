@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Karat </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div>
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}"> LogOut</a></li>
+          Hi {{ user.username}}
+          {% else %}
+          <li><a href="{% url 'login' %}"> Login </a></li>
+          <li><a href="{% url 'signup' %}"> Signup </a></li>
+          {% endif %}
+        </ul>
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  
+  <footer>
+    <div >
+      All Rights Reserved &copy; 2023 karat
+    </div>
+  </footer>
+
+</body>
+
+</html>

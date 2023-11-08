@@ -74,14 +74,27 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Remote Database
+# DATABASES = {
+#     'default': {
+#     'ENGINE': 'django.db.backends.postgresql',
+#         'HOST' : 'flora.db.elephantsql.com',
+#         'PORT' : '5432',
+#         'USER' : 'tsefyxjx',
+#         'PASSWORD' : 'qmT2cv9XM7o0NdEQR_b23ThZApANepdK',
+#         'NAME': 'tsefyxjx',
+#     }
+# }
+
+# Localhost Database
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : 'flora.db.elephantsql.com',
+        'HOST' : 'localhost',
         'PORT' : '5432',
-        'USER' : 'tsefyxjx',
-        'PASSWORD' : 'qmT2cv9XM7o0NdEQR_b23ThZApANepdK',
-        'NAME': 'tsefyxjx',
+        'USER' : 'postgres',
+        'PASSWORD' : 'Zanoob66',
+        'NAME': 'karat',
     }
 }
 
@@ -90,12 +103,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
@@ -121,6 +129,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
