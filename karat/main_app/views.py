@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView , UpdateView, DeleteView
+from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from .models import Shop
 from django.contrib.auth.decorators import login_required
 
@@ -11,6 +12,20 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 class shopCreate(CreateView):
   model = Shop
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+  
+
+class shopUpdate(UpdateView):
+  model = Shop
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+
+class shopDelete(DeleteView):
+  model = Shop
+  success_url = '/shops/'
   fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
 
   def form_valid(self, form):
@@ -37,6 +52,7 @@ def shops_index(request):
   shops=Shop.objects.all() 
   print(shops)
   return render(request, 'shops/index.html', {'shops':shops})
+  return render(request, 'shops/index.html', {'shops':shops})
 
 def signup(request):
   error_message=''
@@ -57,4 +73,14 @@ def signup(request):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
+
+def shops_detail(request, shop_id):
+  shop = Shop.objects.get(id=shop_id)
+  return render(request, 'shops/detail.html', {'shop': shop})
+
+
+  form = UserCreationForm()
+  # context = 
+  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
 
