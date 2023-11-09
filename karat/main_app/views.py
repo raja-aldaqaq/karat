@@ -9,7 +9,7 @@ from .models import Shop
 # Create your views here.
 class shopCreate(CreateView):
   model = Shop
-  fields = ['Shop', 'CR', 'Email' ,'address', 'phone' , 'logo']
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
@@ -25,7 +25,7 @@ def shops_index(request):
   # shops=Shop.objects.filter(user = request.user) 
   shops=Shop.objects.all() 
   print(shops)
-  return render(request, 'shop/index.html', {'shops':shops})
+  return render(request, 'shops/index.html', {'shops':shops})
 
 def signup(request):
   error_message=''
