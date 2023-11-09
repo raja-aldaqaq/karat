@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from .models import Shop
 from django.contrib.auth.decorators import login_required
 
@@ -11,7 +11,20 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 class shopCreate(CreateView):
   model = Shop
-  fields = ['Shop', 'CR', 'Email' ,'address', 'phone' , 'logo']
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+  
+
+class shopUpdate(UpdateView):
+  model = Shop
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+
+class shopDelete(DeleteView):
+  model = Shop
+  success_url = '/shops/'
 
 
 def home(request):
@@ -23,7 +36,7 @@ def shops_index(request):
   # shops=Shop.objects.filter(user = request.user) 
   shops=Shop.objects.all() 
   print(shops)
-  return render(request, 'shop/index.html', {'shops':shops})
+  return render(request, 'shops/index.html', {'shops':shops})
 
 def signup(request):
   error_message=''

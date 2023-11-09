@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>shop Details</h1>
+<div>
+  <a href=" {% url 'detail' shop.id %}">
+  <div>
+    <span>{{ shop.name }}</span>
+    <p>CR Number: {{ shop.CR }}</p>
+    <p>Email: {{ shop.Email }}</p>
+    <p>Address: {{ shop.Address }}</p>
+    <p>Phone Number: {{ shop.Phone }}</p>
+
+    <div>
+      <a href="{% url 'shops_update' shop.id %}">Edit</a>
+      <a href="{% url 'shops_delete' shop.id %}">Delete</a>
+    </div>
+  </div>
+
+        </div>
+      <div>
+        {% load static %}
+        <img height="100px" src="{% static shop.logo|cut:'main_app/static/' %}">
+      </div>
+      </div>
+      </div>
+  </div>
+  <div>
+
+  
+{% endblock %}
