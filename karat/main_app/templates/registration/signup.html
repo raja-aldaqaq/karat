@@ -5,18 +5,24 @@
 <p class="red-text"> {{ error_message }} </p>
 {% endif %}
 
-<form action="{% url 'signup' %}" method="post">
+<!-- <form action="{% url 'signup' %}" method="post">
   <select>
     <option selected disabled>Choose Your User Type</option>
     <option> Shop </option>
     <option> Admin </option>
     <option> Customer </option>
-</select>
+</select> -->
+
+<form action="{% url 'signup' %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="btn" value="signup">
+</form>
 
 
   <h3>Shop Name</h3>
   <input type="text" placeholder="Shop Name" />
-  
+
 
 
 

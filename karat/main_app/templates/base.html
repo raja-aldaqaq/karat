@@ -17,8 +17,10 @@
       <div>
         <ul>
           {% if user.is_authenticated %}
+          <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
+          <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
-          Hi {{ user.username}}
+          Welcome {{ user.username}}
           {% else %}
           <li><a href="{% url 'login' %}"> Login </a></li>
           <li><a href="{% url 'signup' %}"> Signup </a></li>
