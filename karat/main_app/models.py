@@ -11,10 +11,10 @@ from django.urls import reverse
 
 class Shop(models.Model):
     name = models.CharField(max_length=100)
-    CR = models.CharField(max_length=10)
+    CR = models.IntegerField(max_length=10)
     Email = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    phone = models.IntegerField(max_length=100)
     logo = models.ImageField(upload_to="main_app/static/uploads", default="")
     user = models.ForeignKey(User , on_delete=models.CASCADE)
 

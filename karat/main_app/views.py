@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from .models import Shop
 
 
@@ -14,6 +14,15 @@ class shopCreate(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+  
+
+class shopUpdate(UpdateView):
+  model = Shop
+  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+
+class shopDelete(DeleteView):
+  model = Shop
+  success_url = '/shops/'
 
 
 def home(request):
@@ -38,12 +47,17 @@ def signup(request):
     else :
       error_message= 'Invalid Signup - please try again later' , form.error_messages
 
+  form = UserCreationForm()
+  # context = 
+  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
+
+
 def shops_detail(request, shop_id):
   shop = Shop.objects.get(id=shop_id)
   return render(request, 'shops/detail.html', {'shop': shop})
 
 
-  # form = UserCreationForm()
-  # # context = 
-  # return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
+  form = UserCreationForm()
+  # context = 
+  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
 

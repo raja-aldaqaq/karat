@@ -4,11 +4,16 @@
 <div>
   <a href=" {% url 'detail' shop.id %}">
   <div>
-    <span>{{ shop.Shop }}</span>
+    <span>{{ shop.name }}</span>
     <p>CR Number: {{ shop.CR }}</p>
     <p>Email: {{ shop.Email }}</p>
     <p>Address: {{ shop.Address }}</p>
     <p>Phone Number: {{ shop.Phone }}</p>
+
+    <div>
+      <a href="{% url 'shops_update' shop.id %}">Edit</a>
+      <a href="{% url 'shops_delete' shop.id %}">Delete</a>
+    </div>
   </div>
 
         </div>
