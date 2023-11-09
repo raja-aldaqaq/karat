@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv() #initializing this functionality
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,15 +78,15 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Remote Database
+# # Remote Database
 # DATABASES = {
 #     'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
-#         'HOST' : 'flora.db.elephantsql.com',
+#         'HOST' : os.getenv('DATABASEHOST'),
 #         'PORT' : '5432',
-#         'USER' : 'tsefyxjx',
-#         'PASSWORD' : 'qmT2cv9XM7o0NdEQR_b23ThZApANepdK',
-#         'NAME': 'tsefyxjx',
+#         'USER': os.getenv('DATABASEUSER'),
+#         'PASSWORD': os.getenv('DATABASEPASSWORD'),
+#         'NAME': os.getenv('DATABASEUSER'),
 #     }
 # }
 
@@ -93,11 +97,10 @@ DATABASES = {
         'HOST' : 'localhost',
         'PORT' : '5432',
         'USER' : 'postgres',
-        'PASSWORD' : 'Zanoob66',
+        'PASSWORD' : '42822Rajaa42822',
         'NAME': 'karat',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
