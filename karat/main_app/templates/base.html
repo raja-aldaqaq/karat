@@ -19,6 +19,7 @@
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
+          <li><a href="{% url 'profile' %}"> Profile</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}

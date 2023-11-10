@@ -23,19 +23,11 @@ class shopUpdate(UpdateView):
   model = Shop
   fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
 
-class shopDelete(DeleteView):
-  model = Shop
-  success_url = '/shops/'
-  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
   
-
-class shopUpdate(UpdateView):
-  model = Shop
-  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
 
 class shopDelete(DeleteView):
   model = Shop
@@ -72,13 +64,12 @@ def signup(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    return render(request, 'registration/profile.html')
 
 
 def shops_detail(request, shop_id):
   shop = Shop.objects.get(id=shop_id)
   return render(request, 'shops/detail.html', {'shop': shop})
-
 
   form = UserCreationForm()
   # context = 
