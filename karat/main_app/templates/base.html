@@ -9,17 +9,20 @@
   <title> Karat </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 
 <body>
   <header>
-    <nav>
+    <nav class="nav">
       <div>
         <ul>
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'profile' %}"> Profile</a></li>
+          <li><a href="{% url 'products_create' %}">Add a Product</a></li>
+          <li><a href="{% url 'products_index' %}">View All Products</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}

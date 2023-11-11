@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv() #initializing this functionality
+
 
 import os
 from dotenv import load_dotenv
@@ -84,29 +88,26 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Remote Database
-# DATABASES = {
-#     'default': {
-#     'ENGINE': 'django.db.backends.postgresql',
-#         'HOST' : 'flora.db.elephantsql.com',
-#         'PORT' : '5432',
-#         'USER' : 'tsefyxjx',
-#         'PASSWORD' : 'qmT2cv9XM7o0NdEQR_b23ThZApANepdK',
-#         'NAME': 'tsefyxjx',
-#     }
-# }
-
-# Localhost Database
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : 'localhost',
+        'HOST' : os.getenv('DATABASEHOST'),
         'PORT' : '5432',
-        'NAME': os.getenv('DATABASENAME'),
         'USER': os.getenv('DATABASEUSER'),
         'PASSWORD': os.getenv('DATABASEPASSWORD'),
+        'NAME': os.getenv('DATABASEUSER'),
     }
 }
 
+# Localhost Database
+# DATABASES = {
+#     'default': {
+#     'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'karat',
+#         'USER' : 'postgres',
+#         'PASSWORD' : '42822Rajaa42822'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
