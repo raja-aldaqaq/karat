@@ -1,12 +1,14 @@
+from datetime import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product, Order
+from .models import Shop, Product, Order, OrderItem
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 # Create your views here.
 
 
@@ -90,11 +92,28 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
     success_url = '/products/'
 
 
-def add_to_cart(request, product_id):
-    cart = Order(request)
+def add_to_cart(request, slug):
+    # cart = Order(request)
     # ERRROOOORRRR HEREEEE ??????
-    cart.add(product_id)
-    return render(request, 'cart/cart.html')
+    item = get_object_or_404(OrderItem, slug=slug)
+    # cart.add(product_id)
+    order_item, created = OrderItem.objects.get_or_create(
+        item=item,
+        user=request.user,
+        ordered=False
+    )
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        # check if the order item is in the order
+        if order.items.filter(slug=slug).exists():
+            order_item.quantity += 1
+            order_item.save()
+            messages.info(request, "This item quantity was updated.")
+            return redirect("core:order-summary")
+        else:
+            order.items.add(order_item)
+            messages.info(request, "This item was added to your cart.")
 
 
 def Cart(request, user_id):
