@@ -48,7 +48,6 @@ class Product(models.Model):
         max_length=1, choices=categories, default=categories[0][0])
     # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    slug = models.SlugField()
 
     def __str__(self):
         return f'{self.name} from {self.shop}'
@@ -56,13 +55,13 @@ class Product(models.Model):
 
 def get_add_to_cart_url(self):
     return reverse("core:add-to-cart", kwargs={
-        'slug': self.slug
+        'product_id': self.id
     })
 
 
 def get_remove_from_cart_url(self):
     return reverse("core:remove-from-cart", kwargs={
-        'slug': self.slug
+        'product_id': self.id
     })
 
 
