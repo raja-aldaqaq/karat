@@ -13,11 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv() #initializing this functionality
+load_dotenv()  # initializing this functionality
 
 
-import os
-from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,9 +83,9 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # Remote Database
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : os.getenv('DATABASEHOST'),
-        'PORT' : '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.getenv('DATABASEHOST'),
+        'PORT': '5432',
         'USER': os.getenv('DATABASEUSER'),
         'PASSWORD': os.getenv('DATABASEPASSWORD'),
         'NAME': os.getenv('DATABASEUSER'),
@@ -103,6 +101,7 @@ DATABASES = {
 #         'PASSWORD' : '42822Rajaa42822'
 #     }
 # }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

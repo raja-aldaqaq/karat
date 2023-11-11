@@ -22,6 +22,7 @@
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'products_create' %}">Add a Product</a></li>
           <li><a href="{% url 'products_index' %}">View All Products</a></li>
+          <li><a href="{% url 'cart' user.id%}">Cart</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}
@@ -44,7 +45,7 @@
       All Rights Reserved &copy; 2023 karat
     </div>
   </footer>
-
+ <script src="https://unpkg.com/htmx.org@1.7.0" ></script>
 </body>
 
 </html>
