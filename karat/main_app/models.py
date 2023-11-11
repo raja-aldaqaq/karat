@@ -55,12 +55,14 @@ class Product(models.Model):
 
 class Order(models.Model):
     total_amount = models.FloatField()
-    date = models.DateTimeField(auto_now_add=TRUE)
+    date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    status = models.CharField(max_length=100)
 
 
 class Order_item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

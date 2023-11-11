@@ -98,5 +98,8 @@ def add_to_cart(request, product_id):
 
 
 def Cart(request, user_id):
-    cart = Order.objects.get(id=user_id)
+    try:
+        cart = Order.objects.get(id=user_id)
+    except Order.DoesNotExist:
+        cart = None
     return render(request, 'cart/cart.html', {'cart': cart})
