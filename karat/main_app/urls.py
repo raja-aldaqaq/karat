@@ -24,7 +24,7 @@ urlpatterns = [
     path('products/<int:pk>/delete/', views.ProductDelete.as_view(),
          name='products_delete'),  # delete
 
-    # ADD TO CART - When Clicked On Click Cart
+    # ADD TO CART - When Clicked On Click Cart //ADDS to the order model
     path('add_to_cart/<int:product_id>/',
          views.add_to_cart, name='add_to_cart'),
     path('cart/<int:user_id>/', views.Cart, name='cart')

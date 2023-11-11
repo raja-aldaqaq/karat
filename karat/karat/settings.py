@@ -95,10 +95,21 @@ DATABASES = {
 # Localhost Database
 # DATABASES = {
 #     'default': {
-#     'ENGINE': 'django.db.backends.postgresql',
+#         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'karat',
-#         'USER' : 'postgres',
-#         'PASSWORD' : '42822Rajaa42822'
+#         'USER': 'postgres',
+#         'PASSWORD': '42822Rajaa42822'
+#     }
+# }
+# Zahra DAtavase
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': 'flora.db.elephantsql.com',
+#         'PORT': '5432',
+#         'USER': 'ikusrryy',
+#         'PASSWORD': 'UiOPCebBqAJNRIP1tIBvza7kMG7XNiwo',
+#         'NAME': 'ikusrryy',
 #     }
 # }
 

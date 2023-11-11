@@ -92,8 +92,9 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
 
 def add_to_cart(request, product_id):
     cart = Order(request)
+    # ERRROOOORRRR HEREEEE ??????
     cart.add(product_id)
-    return render(request, 'cart/menu_cart.html')
+    return render(request, 'cart/cart.html')
 
 
 def Cart(request, user_id):
