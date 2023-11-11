@@ -13,10 +13,14 @@
 </head>
 
 <body>
-  <header>
+  <header class="navbar-fixed">
     <nav class="nav">
-      <div>
+      <div class="nav-wrapper">
         <ul>
+          <li><a href="{% url 'home' %}" class="left brand-logo">Karat</a></li>
+
+        </ul>
+        <ul class="right">
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
@@ -34,13 +38,13 @@
     </nav>
   </header>
 
-  <main>
+  <main class="container">
     {% block content %}
     {% endblock %}
   </main>
   
-  <footer>
-    <div >
+  <footer class="page-footer">
+    <div class="right">
       All Rights Reserved &copy; 2023 karat
     </div>
   </footer>

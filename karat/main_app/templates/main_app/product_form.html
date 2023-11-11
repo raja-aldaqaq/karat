@@ -9,11 +9,14 @@
 
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
+  <!-- <table> -->
+    {{ form.as_p }}
+  <!-- </table> -->
   <input type="submit" value="Submit!" class="btn">
 </form>
 
-
+<script>
+  let categoryEle =  document.getElementById('id_category')
+    M.FormSelect.init(categoryEle)
+</script>
 {% endblock %}

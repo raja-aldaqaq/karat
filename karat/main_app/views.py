@@ -62,7 +62,7 @@ def signup(request):
 
 class ProductCreate(LoginRequiredMixin, CreateView):
   model = Product
-  fields = ['name','price', 'karat', 'category', 'weight', 'quantity_available', 'image'] # M to M cannot use all
+  fields = ['name','category','price', 'karat',  'weight', 'quantity_available', 'image']
 
 class ProductList(LoginRequiredMixin, ListView):
   model = Product
@@ -72,7 +72,7 @@ class ProductDetail(LoginRequiredMixin, DetailView):
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
   model = Product
-  fields = ['name','price', 'karat', 'weight','quantity_available', 'image', 'category'] # M to M cannot use all
+  fields = ['name','category','price', 'karat', 'weight','quantity_available', 'image']
 
 class ProductDelete(LoginRequiredMixin, DeleteView):
   model = Product
