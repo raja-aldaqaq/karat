@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 class="title">Products list</h1>
+
+
+<h1 class="title">My Products</h1>
 <div class="product_list">
-{% for product in product_list %}
+{% for product in products %}
   <div class="page-wrapper">
     <div class="page-inner">
       <div class="row">
@@ -27,12 +29,12 @@
               <div class="h-bg-inner"></div>
             </div>
   
-            <a class="cart" href="#">
+            <!-- <a class="cart" href="#">
               <span class="price">{{ product.price }} BHD</span>
               <span class="add-to-cart">
                 <span class="txt">Add to cart</span>
               </span>
-            </a>
+            </a> -->
           </div>
         </div>
       </div>
@@ -40,4 +42,6 @@
   </div>
 {% endfor %}
 </div>
+
+
 {% endblock %}

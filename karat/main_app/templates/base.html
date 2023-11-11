@@ -11,21 +11,36 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+<!-- <style>
+  .brand-logo{
+  pointer-events: none;
+}
 
+.logoE{
+  pointer-events:visible;
+}
+</style> -->
 <body>
   <header class="navbar-fixed">
     <nav class="nav">
       <div class="nav-wrapper">
         <ul>
-          <li><a href="{% url 'home' %}" class="left brand-logo">Karat</a></li>
-
+          <li class="left brand-logo">
+            <a href="{% url 'home' %}">
+              Karat
+              <!-- <img  width="5%" height="5%" src="../static/logo/logo.png">
+              <div class="logoE"></div> -->
+            </a>
+          </li>
         </ul>
+
         <ul class="right">
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'products_create' %}">Add a Product</a></li>
           <li><a href="{% url 'products_index' %}">View All Products</a></li>
+          <li><a href="{% url 'my_products' %}">My Products</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}

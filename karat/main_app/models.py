@@ -32,6 +32,7 @@ categories = (
 
 class Product(models.Model):
     name = models.CharField(max_length=150)
+    description = models.TextField()
     price = models.FloatField()
     karat = models.IntegerField()
     weight = models.FloatField()
@@ -39,10 +40,18 @@ class Product(models.Model):
     image = models.ImageField(upload_to="main_app/static/uploads", default="")
     category = models.CharField(
         max_length=1, choices=categories, default=categories[0][0])
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+
     def __str__(self):
         return f'{self.name} from {self.shop}'
+
+    def get_absolute_url(self):
+        return reverse('products_detail', kwargs={'pk' : self.id})
+
+    class Meta:
+        ordering = ['-id']
+
+
     def get_add_to_cart_url(self):
         return reverse("core:add-to-cart", kwargs={
             'product_id': self.id
@@ -52,27 +61,27 @@ class Product(models.Model):
             'product_id': self.id
         })
 
-class OrderItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    price = models.FloatField()
-    item = models.ForeignKey(Product, on_delete=models.CASCADE)
-    # order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.quantity} of {self.product.name}"
-    def get_total_item_price(self):
-        return self.quantity * self.item.price
+# class OrderItem(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     quantity = models.IntegerField(default=1)
+#     price = models.FloatField()
+#     item = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     # order = models.ForeignKey(Order, on_delete=models.CASCADE)
+#     def __str__(self):
+#         return f"{self.quantity} of {self.product.name}"
+#     def get_total_item_price(self):
+#         return self.quantity * self.item.price
 
-class Order(models.Model):
-    total_amount = models.FloatField()
-    date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
-    ordered = models.BooleanField(default=False)
-    def __str__(self):
-        return self.user.username
-    def get_total(self):
-        total = 0
-        for order_item in self.items.all():
-            total += order_item.get_final_price()
+# class Order(models.Model):
+#     total_amount = models.FloatField()
+#     date = models.DateTimeField(auto_now_add=True)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+#     items = models.ManyToManyField(OrderItem)
+#     ordered = models.BooleanField(default=False)
+#     def __str__(self):
+#         return self.user.username
+#     def get_total(self):
+#         total = 0
+#         for order_item in self.items.all():
+#             total += order_item.get_final_price()
