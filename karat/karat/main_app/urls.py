@@ -24,4 +24,10 @@ urlpatterns = [
   path('products/create/', views.ProductCreate.as_view(), name = 'products_create'), # Create
   path('products/<int:pk>/update/', views.ProductUpdate.as_view(), name = 'products_update'), # Update
   path('products/<int:pk>/delete/', views.ProductDelete.as_view(), name = 'products_delete'), # delete
+
+  # display products by category
+  path('products/categories/', views.category , name = 'categories'), # categories
+  path('products/<category>/products_by_category/', views.category_products , name = 'products_by_category'), # products by category
+
+  # display products by shops
 ]
