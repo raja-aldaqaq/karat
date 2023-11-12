@@ -75,9 +75,6 @@ def signup(request):
 def profile(request):
     return render(request, 'registration/profile.html')
 
-
-
-
   form = UserCreationForm()
   # context = 
   return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
