@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product, Profile
+from .models import Shop, Product, Profile, categories
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
@@ -86,6 +86,20 @@ def my_products(request):
   products=Product.objects.filter(shop=shop)
   return render(request, 'products/my_products.html', {'products':products})
 
+
+def category(request):
+  return render(request, 'products/categories.html', {'categories':categories})
+
+
+def category_products(request,category):
+  # category = request.category
+  for category_c, name in categories:
+    if category_c == category:
+      category_name = name
+      break
+
+  products=Product.objects.filter(category=category)
+  return render(request, 'products/products_by_category.html', {'products':products, 'category_name':category_name})
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
   model = Product
