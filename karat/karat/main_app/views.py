@@ -43,7 +43,7 @@ def shops_detail(request, shop_id):
 def signup(request):
   error_message=''
   if request.method == 'POST':
-    form = UserCreationForm(request.POST)
+    form = SignUpForm(request.POST)
     if form.is_valid():
       user = form.save()
       login(request, user) #login immedietly after signup
@@ -51,7 +51,7 @@ def signup(request):
     else :
       error_message= 'Invalid Signup - please try again later' , form.error_messages
 
-  form = UserCreationForm()
+  form = SignUpForm()
   # context = 
   return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
 
