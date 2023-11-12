@@ -17,6 +17,7 @@ urlpatterns = [
   path('adduser/',views.addnewuser, name='adduser'),
 
 
+
   # URLs for Product CRUD Operations
   path('products/', views.ProductList.as_view(), name='products_index'), #Index
   path('products/my_products', views.my_products, name='my_products'), #Index
