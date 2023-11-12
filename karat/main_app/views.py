@@ -62,7 +62,7 @@ def signup(request):
 
 class ProductCreate(LoginRequiredMixin, CreateView):
   model = Product
-  fields = ['name','category','price', 'karat',  'weight', 'quantity_available', 'image']
+  fields = ['name', 'description', 'category','price', 'karat',  'weight', 'quantity_available', 'image']
 
   def form_valid(self, form):
     user = self.request.user
@@ -92,7 +92,7 @@ def my_products(request):
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
   model = Product
-  fields = ['name','category','price', 'karat', 'weight','quantity_available', 'image']
+  fields = ['name', 'description','category','price', 'karat', 'weight','quantity_available', 'image']
 
 class ProductDelete(LoginRequiredMixin, DeleteView):
   model = Product

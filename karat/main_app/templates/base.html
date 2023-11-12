@@ -26,11 +26,9 @@
       <div class="nav-wrapper">
         <ul>
           <li class="left brand-logo">
-            <a href="{% url 'home' %}">
-              Karat
-              <!-- <img  width="5%" height="5%" src="../static/logo/logo.png">
-              <div class="logoE"></div> -->
-            </a>
+              <a href="{% url 'home' %}">
+                <img src="../static/logo/logo.png"  width="60" height="60">
+              </a>
           </li>
         </ul>
 
@@ -39,7 +37,7 @@
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'products_create' %}">Add a Product</a></li>
-          <li><a href="{% url 'products_index' %}">View All Products</a></li>
+          <li><a href="{% url 'products_index' %}">All Products</a></li>
           <li><a href="{% url 'my_products' %}">My Products</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}

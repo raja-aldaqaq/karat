@@ -165,7 +165,8 @@ body {
 }
 
 .img{
-  width: 70%;
+  width: 90%;
+  height: 50%;
 }
 .h-bg {
   -webkit-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
