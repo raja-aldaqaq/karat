@@ -92,9 +92,32 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
     success_url = '/products/'
 
 
-def add_to_cart(request, product_id, user_id):
-    OrderItem.objects.get(id=user_id).item.add(product_id)
-    return messages.info("This item quantity was ADDED.")
+def Cart(request, user_id, shop_id):
+    Order.objects.create(user_id=user_id, shop_id=shop_id)
+
+
+@login_required
+def add_to_cart(request, product_id, user_id, shop_id):
+    # GET THE PRODUCT INFORMATION
+    product = Product.objects.get(pk=product_id)
+    # cart, created = Order.objects.get_or_create(user=user_id)
+    cart = Order.objects.get(user=user_id, ordered=False)
+    # IFFFF CARTTT IS NULLLL
+    if not cart:
+        cart = Order.objects.create(user=user_id, ordered=False)
+    # IF there is A cart
+    if cart:
+        # CHECKKK IFFF THE SHOP = THE NEW PRODUCT
+        if product.shop == shop_id:
+            cart_item, item_created = OrderItem.objects.get_or_create(
+                cart=cart, product=product_id)
+            if not item_created:
+                cart_item.quantity = cart_item.quantity + 1
+                cart_item.save()
+    return render(request, 'shops/index.html')
+
+#     OrderItem.objects.get(id=user_id).item.add(product_id)
+#     return messages.info("This item quantity was ADDED.")
     # # cart = Order(request)
     # # ERRROOOORRRR HEREEEE ??????
     # item = get_object_or_404(OrderItem, id=product_id)
@@ -118,9 +141,9 @@ def add_to_cart(request, product_id, user_id):
     #         messages.info(request, "This item was added to your cart.")
 
 
-def Cart(request, user_id):
-    try:
-        cart = Order.objects.get(id=user_id)
-    except Order.DoesNotExist:
-        cart = None
-    return render(request, 'cart/cart.html', {'cart': cart})
+# def Cart(request, user_id):
+#     try:
+#         cart = Order.objects.get(id=user_id)
+#     except Order.DoesNotExist:
+#         cart = None
+#     return render(request, 'cart/cart.html', {'cart': cart})
