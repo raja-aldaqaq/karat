@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product
+from .models import Shop, Product, Profile
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -38,10 +38,6 @@ def shops_detail(request, shop_id):
   shop = Shop.objects.get(id=shop_id)
   return render(request, 'shops/detail.html', {'shop': shop})
 
-  form = UserCreationForm()
-  # context = 
-  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
-
 def signup(request):
   error_message=''
   if request.method == 'POST':
@@ -56,8 +52,6 @@ def signup(request):
   form = UserCreationForm()
   # context = 
   return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
-
-
 
 
 class ProductCreate(LoginRequiredMixin, CreateView):
@@ -97,3 +91,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 class ProductDelete(LoginRequiredMixin, DeleteView):
   model = Product
   success_url = '/products/'
+
+@login_required
+def profile(request):
+    return render(request, 'registration/profile.html')

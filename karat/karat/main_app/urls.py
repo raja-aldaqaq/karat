@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import profile
+
 
 urlpatterns = [
   path('', views.home, name='home'),
@@ -12,6 +14,8 @@ urlpatterns = [
   
   #signup
   path('accounts/signup/', views.signup, name='signup'),
+  path('profile/',views.profile, name='profile'),
+
 
   # URLs for Product CRUD Operations
   path('products/', views.ProductList.as_view(), name='products_index'), #Index
