@@ -14,6 +14,7 @@ urlpatterns = [
   #signup
   path('accounts/signup/', views.signup, name='signup'),
   path('profile/',views.profile, name='profile'),
+  path('adduser/',views.addnewuser, name='adduser'),
 
 
   # URLs for Product CRUD Operations

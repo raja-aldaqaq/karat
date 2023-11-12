@@ -40,6 +40,7 @@
           <li><a href="{% url 'products_index' %}">All Products</a></li>
           <li><a href="{% url 'my_products' %}">My Products</a></li>
           <li><a href="{% url 'profile' %}"> My Profile </a></li>
+          <li><a href="{% url 'adduser' %}"> Add User </a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}

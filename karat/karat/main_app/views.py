@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView
 from .models import Shop, Product, Profile
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import SignUpForm
+from .forms import SignUpForm , AddUser
+
 
 
 # Create your views here.
@@ -109,3 +110,19 @@ def profile(request):
         form = SignUpForm()
     # return render(request, 'signup.html', {'form': form})
     return render(request, 'registration/login.html', {'form': form})
+
+
+
+def addnewuser(request):
+  error_message=''
+  if request.method == 'POST':
+    form = AddUser(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user) #login immedietly after signup
+      return redirect('index') 
+  else :
+    # error_message= 'Invalid Signup - please try again later' , form.error_messages
+    form = AddUser()
+  return render(request, 'registration/adduser.html' , {'form' : form, 'error_message':error_message})
+
