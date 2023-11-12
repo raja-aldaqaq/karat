@@ -28,7 +28,7 @@
             <a class="cart" href="#">
               <span class="price">{{ product.price }}</span>
               <span class="add-to-cart">
-                  <form action="{% url 'add_to_cart' product.id user.id product.shop.id %}" method="post">
+                  <form action="{% url 'add_to_cart' product.id  user.id product.shop.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="txt">Add To Cart </button>
                   </form> 

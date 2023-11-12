@@ -91,9 +91,16 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = '/products/'
 
-
-def Cart(request, user_id, shop_id):
-    Order.objects.create(user_id=user_id, shop_id=shop_id)
+# CONDITION TO CART //
+# 1- ADD TO CART
+# 2- Delete from cart
+# 3- DECREASE AND INCREASE QUANTITY
+# 4- View CART
+# 5- When the user clicks add to cart there is total Price function if will get the quantity from cartitem and multiply by the price and + FOr all elements //  Should be changes if the user changed the amount
+# 6- CLick plaace order the status will be changed and the cart will be wmpty // delete cart
+# Alsoooooooo we have to check the stock !!!
+# def Cart(request, user_id, shop_id):
+#     Order.objects.create(user_id=user_id, shop_id=shop_id)
 
 
 @login_required
@@ -115,6 +122,71 @@ def add_to_cart(request, product_id, user_id, shop_id):
                 cart_item.quantity = cart_item.quantity + 1
                 cart_item.save()
     return render(request, 'shops/index.html')
+
+# Function to get the product id and remove it from cart
+
+
+@login_required
+def remove_from_cart(request, product_id):
+    # Get the product from Product_id
+    product = Product.objects.get(pk=product_id)
+    # GET the cart by the user id // Retrieve cart created by user
+    cart = Order.objects.get(user=request.user)
+    try:
+        # Retrieve cart item from the user cart
+        cart_item = cart.objects.get(product_id=product_id)
+        if cart_item.quantity >= 1:
+            cart_item.delete()
+    except OrderItem.DoesNotExist:
+        pass
+
+    return render(request, 'cart/cart.html', {'cart': cart})
+
+# Get the the data in the cart
+
+
+@login_required
+def view_cart(request, user_id):
+    cart = Order.objects.get(user_id=user_id)
+    cart_items = OrderItem.objects.filter(cart=cart)
+    return render(request, 'cart.html', {'cart_items': cart_items})
+# IF THE USER CLICKED ON INCRESE
+
+
+@login_required
+def increase_cart_item(request, product_id, user_id):
+    product = Product.objects.get(pk=product_id)
+    cart = Order.objects.get(user_id=user_id)
+    cart_item, created = OrderItem.objects.get_or_create(
+        cart=cart, product=product)
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('cart')
+# Decrese the Amount In Cart
+
+
+@login_required
+def decrease_cart_item(request, product_id, user_id):
+    product = Product.objects.get(pk=product_id)
+    cart = Order.objects.get(user_id=user_id)
+    cart_item = cart.objects.get(product_id=product_id)
+    # WRONG AS THE QUANTITY IS IN ORDERITEM ???
+    if cart_item.product.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect('cart')
+
+# INCOMPLETE
+# increase the size from stock
+
+
+@login_required
+def place_order(request, user_id):
+    cart = Order.objects.get(user_id=user_id)
+    cart.ordered = True
 
 #     OrderItem.objects.get(id=user_id).item.add(product_id)
 #     return messages.info("This item quantity was ADDED.")
