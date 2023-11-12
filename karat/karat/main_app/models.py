@@ -85,3 +85,14 @@ class Product(models.Model):
 #         total = 0
 #         for order_item in self.items.all():
 #             total += order_item.get_final_price()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    
+
+
+    def __str__(self):
+        return self.user.username
+    
+    

@@ -3,9 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product
+from .models import Shop, Product, Profile
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import SignUpForm , AddUser
+
+
 
 # Create your views here.
 class shopCreate(CreateView):
@@ -38,14 +41,10 @@ def shops_detail(request, shop_id):
   shop = Shop.objects.get(id=shop_id)
   return render(request, 'shops/detail.html', {'shop': shop})
 
-  form = UserCreationForm()
-  # context = 
-  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
-
 def signup(request):
   error_message=''
   if request.method == 'POST':
-    form = UserCreationForm(request.POST)
+    form = SignUpForm(request.POST)
     if form.is_valid():
       user = form.save()
       login(request, user) #login immedietly after signup
@@ -53,11 +52,9 @@ def signup(request):
     else :
       error_message= 'Invalid Signup - please try again later' , form.error_messages
 
-  form = UserCreationForm()
+  form = SignUpForm()
   # context = 
   return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
-
-
 
 
 class ProductCreate(LoginRequiredMixin, CreateView):
@@ -97,3 +94,35 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 class ProductDelete(LoginRequiredMixin, DeleteView):
   model = Product
   success_url = '/products/'
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = form.save()(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    # return render(request, 'signup.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
+def addnewuser(request):
+  error_message=''
+  if request.method == 'POST':
+    form = AddUser(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user) #login immedietly after signup
+      return redirect('index') 
+  else :
+    # error_message= 'Invalid Signup - please try again later' , form.error_messages
+    form = AddUser()
+  return render(request, 'registration/adduser.html' , {'form' : form, 'error_message':error_message})
+
