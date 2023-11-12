@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ product.name }}</h1>
+  {% load static %}
+  <img src="{% static product.image|cut:'main_app/static/' %}" alt="">
+  <p>{{ product.description }}</p>
+  <!-- Add other product details as needed -->
+
+  {% if is_owner %}
+  <a href="{% url 'products_update' product.id %}">Edit</a>
+  <a href="{% url 'products_delete' product.id %}">Delete</a>
+  {% else %}
+    <a href="">Add to cart</a>
+  {% endif %}
+{% endblock %}

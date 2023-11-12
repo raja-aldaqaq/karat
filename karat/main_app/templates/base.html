@@ -11,18 +11,35 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+<!-- <style>
+  .brand-logo{
+  pointer-events: none;
+}
 
+.logoE{
+  pointer-events:visible;
+}
+</style> -->
 <body>
-  <header>
+  <header class="navbar-fixed">
     <nav class="nav">
-      <div>
+      <div class="nav-wrapper">
         <ul>
+          <li class="left brand-logo">
+              <a href="{% url 'home' %}">
+                <img src="../static/logo/logo.png"  width="60" height="60">
+              </a>
+          </li>
+        </ul>
+
+        <ul class="right">
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'profile' %}"> Profile</a></li>
           <li><a href="{% url 'products_create' %}">Add a Product</a></li>
-          <li><a href="{% url 'products_index' %}">View All Products</a></li>
+          <li><a href="{% url 'products_index' %}">All Products</a></li>
+          <li><a href="{% url 'my_products' %}">My Products</a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
           {% else %}
@@ -35,13 +52,13 @@
     </nav>
   </header>
 
-  <main>
+  <main class="container">
     {% block content %}
     {% endblock %}
   </main>
   
-  <footer>
-    <div >
+  <footer class="page-footer">
+    <div class="right">
       All Rights Reserved &copy; 2023 karat
     </div>
   </footer>

@@ -85,7 +85,14 @@ def profile(request):
 
 class ProductCreate(LoginRequiredMixin, CreateView):
   model = Product
-  fields = ['name','price', 'karat', 'category', 'weight', 'quantity_available', 'image'] # M to M cannot use all
+  fields = ['name', 'description', 'category','price', 'karat',  'weight', 'quantity_available', 'image']
+
+  def form_valid(self, form):
+    user = self.request.user
+    shop = Shop.objects.get(user=user)
+    form.instance.shop = shop
+    return super().form_valid(form)
+
 
 class ProductList(LoginRequiredMixin, ListView):
   model = Product
@@ -93,9 +100,22 @@ class ProductList(LoginRequiredMixin, ListView):
 class ProductDetail(LoginRequiredMixin, DetailView):
   model = Product
 
+  def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Check if the current user added the product
+        context['is_owner'] = self.object.shop.user == self.request.user
+        return context
+
+def my_products(request):
+  user = request.user
+  shop = Shop.objects.get(user=user)
+  products=Product.objects.filter(shop=shop)
+  return render(request, 'products/my_products.html', {'products':products})
+
+
 class ProductUpdate(LoginRequiredMixin, UpdateView):
   model = Product
-  fields = ['name','price', 'karat', 'weight','quantity_available', 'image', 'category'] # M to M cannot use all
+  fields = ['name', 'description','category','price', 'karat', 'weight','quantity_available', 'image']
 
 
 class ProductDelete(LoginRequiredMixin, DeleteView):
