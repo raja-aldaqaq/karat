@@ -6,6 +6,8 @@ from django.views.generic import ListView, DetailView
 from .models import Shop, Product, Profile
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import SignUpForm
+
 
 # Create your views here.
 class shopCreate(CreateView):
@@ -94,4 +96,16 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def profile(request):
-    return render(request, 'registration/profile.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = form.save()(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    # return render(request, 'signup.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})

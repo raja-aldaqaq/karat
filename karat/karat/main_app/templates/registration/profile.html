@@ -3,8 +3,16 @@
 {% block title %}Profile Page{% endblock title %}
 
 {% block content %}
+
     <div>
         <h1> User Name : {{user.username}}</h1>
+
     </div>
+
+<form action="{% url 'profile' %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="btn" value="profile">
+</form>
 
 {% endblock content %}
