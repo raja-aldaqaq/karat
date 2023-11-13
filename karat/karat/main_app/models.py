@@ -64,7 +64,7 @@ class Profile(models.Model):
 
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default=1, null=True)
     is_ordered = models.BooleanField(default=False, null=True)
     date_orderd = models.DateTimeField(auto_now=True, null=True)
     date_added = models.DateTimeField(auto_now=True, null=True)

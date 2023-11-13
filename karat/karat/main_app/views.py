@@ -7,7 +7,7 @@ from .models import Shop, Product, Profile, categories, Cart, CartItem, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm, AddUser
-
+from django.contrib import messages
 # API
 import requests
 import ast
@@ -206,4 +206,6 @@ def add_to_cart(request, product_id):
         cart = Cart.objects.get(user=user, is_ordered=False)
         cart.items.add(order_item)
         cart.save()
-    # show confirmation message and redirect back to the same page    messages.info(request, "item added to cart")    return redirect('/categories')
+    # show confirmation message and redirect back to the same page
+    messages.info(request, "item added to cart")
+    # return redirect('/categories')
