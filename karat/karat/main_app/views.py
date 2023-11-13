@@ -47,8 +47,15 @@ def home(request):
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     gold = ast.literal_eval(response.text)
+    gold_prices = {
+      "price_gram_24k": gold["price_gram_24k"]/10,
+      "price_gram_22k": gold["price_gram_22k"]/10,
+      "price_gram_21k": gold["price_gram_21k"]/10,
+      "price_gram_18k": gold["price_gram_18k"]/10,
+
+    }
     print(gold)
-    return render(request, 'index.html' , {'gold': gold })
+    return render(request, 'index.html' , {'gold': gold, "gold_prices":gold_prices })
   except requests.exceptions.RequestException as e:
     print("Error:", str(e))
 
