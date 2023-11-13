@@ -60,20 +60,20 @@ class Profile(models.Model):
 
 
 class Order(models.Model):
-    total_amount = models.FloatField()
-    date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    total_amount = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
     # ONLY THE PRODUCTS INSIDE ORDERITEM
-    products = models.ManyToManyField(Product, through='OrderItem')
+    # products = models.ManyToManyField(Product, through='OrderItem')
 
     def __str__(self):
         return self.user.username
 
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
