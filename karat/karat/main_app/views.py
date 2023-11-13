@@ -170,3 +170,88 @@ def addnewuser(request):
 
 
 
+
+@login_required
+def add_to_cart(request, product_id, user_id, shop_id):
+    # GET THE PRODUCT INFORMATION
+    product = Product.objects.get(pk=product_id)
+    # cart, created = Order.objects.get_or_create(user=user_id)
+    cart = Order.objects.get(user=user_id, ordered=False)
+    # IFFFF CARTTT IS NULLLL
+    if not cart:
+        cart = Order.objects.create(user=user_id, ordered=False)
+    # IF there is A cart
+    if cart:
+        # CHECKKK IFFF THE SHOP = THE NEW PRODUCT
+        if product.shop == shop_id:
+            cart_item, item_created = OrderItem.objects.get_or_create(
+                cart=cart, product=product_id)
+            if not item_created:
+                cart_item.quantity = cart_item.quantity + 1
+                cart_item.save()
+    return render(request, 'shops/index.html')
+
+# Function to get the product id and remove it from cart
+
+
+@login_required
+def remove_from_cart(request, product_id):
+    # Get the product from Product_id
+    product = Product.objects.get(pk=product_id)
+    # GET the cart by the user id // Retrieve cart created by user
+    cart = Order.objects.get(user=request.user)
+    try:
+        # Retrieve cart item from the user cart
+        cart_item = cart.objects.get(product_id=product_id)
+        if cart_item.quantity >= 1:
+            cart_item.delete()
+    except OrderItem.DoesNotExist:
+        pass
+
+    return render(request, 'cart/cart.html', {'cart': cart})
+
+# Get the the data in the cart
+
+
+@login_required
+def view_cart(request, user_id):
+    cart = Order.objects.get(user_id=user_id)
+    cart_items = OrderItem.objects.filter(cart=cart)
+    return render(request, 'cart.html', {'cart_items': cart_items})
+# IF THE USER CLICKED ON INCRESE
+
+
+@login_required
+def increase_cart_item(request, product_id, user_id):
+    product = Product.objects.get(pk=product_id)
+    cart = Order.objects.get(user_id=user_id)
+    cart_item, created = OrderItem.objects.get_or_create(
+        cart=cart, product=product)
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('cart')
+# Decrese the Amount In Cart
+
+
+@login_required
+def decrease_cart_item(request, product_id, user_id):
+    product = Product.objects.get(pk=product_id)
+    cart = Order.objects.get(user_id=user_id)
+    cart_item = cart.objects.get(product_id=product_id)
+    # WRONG AS THE QUANTITY IS IN ORDERITEM ???
+    if cart_item.product.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect('cart')
+
+# INCOMPLETE
+# increase the size from stock
+
+
+@login_required
+def place_order(request, user_id):
+    cart = Order.objects.get(user_id=user_id)
+    cart.ordered = True
