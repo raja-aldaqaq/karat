@@ -5,14 +5,14 @@
 <h1> All Shop </h1>
 
 {% for shop in shops %}
-  <div>
+  <div class="card" >
     <a href=" {% url 'detail' shop.id %}">
-    <div>
+    <div class="container">
       <span>{{ shop.name }}</span>
       <p>CR Number: {{ shop.CR }}</p>
       <p>Email: {{ shop.Email }}</p>
-      <p>Address: {{ shop.Address }}</p>
-      <p>Phone Number: {{ shop.Phone }}</p>
+      <p>Address: {{ shop.address }}</p>
+      <p>Phone Number: {{ shop.phone }}</p>
     </div>
 
     <div> 
