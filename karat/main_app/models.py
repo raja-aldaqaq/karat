@@ -48,35 +48,49 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name} from {self.shop}'
 
+# class Cart(models.Model):
+#     total_amount = models.FloatField()
+#     date_added = models.DateTimeField(auto_now=True , null=True)
+#     date_orderd = models.DateTimeField(auto_now=True , null=True)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+#     is_ordered = models.BooleanField(default=False , null=True)
+#     # ONLY THE PRODUCTS INSIDE ORDERITEM
+#     products = models.ManyToManyField(Product)
 
-# def get_total_item_price(self):
-#     return self.quantity * self.item.price
-
-
-class Order(models.Model):
-    total_amount = models.FloatField()
-    date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    ordered = models.BooleanField(default=False)
-    # ONLY THE PRODUCTS INSIDE ORDERITEM
-    products = models.ManyToManyField(Product, through='OrderItem')
-
-    def __str__(self):
-        return self.user.username
+#     def __str__(self):
+#         return self.user.username
 
 
-class OrderItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    price = models.FloatField()
+# class CartItem(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     quantity = models.IntegerField(default=1)
+#     price = models.FloatField()
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     order = models.ForeignKey(Cart, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f"{self.quantity} of {self.product.name}"
+
+class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    is_ordered = models.BooleanField(default=False, null=True)
+    date_orderd = models.DateTimeField(auto_now=True, null=True)
+    date_added = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.name}"
+        return self.product.name
 
-# def get_total(self):
-#     total = 0
-#     for order_item in self.items.all():
-#         total += order_item.get_final_price()
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_ordered = models.BooleanField(default=False, null=True)
+    items = models.ManyToManyField(CartItem)
+    date_orderd = models.DateTimeField(auto_now=True, null=True)
+
+    def get_cart_items(self):
+        return self.items.all()
+
+    def get_cart_total(self):
+        return sum([(item.product.price) for item in self.items.all()])

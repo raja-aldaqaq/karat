@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product, Order, OrderItem, User
+from .models import Shop, Product, Cart, CartItem, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
@@ -100,106 +100,137 @@ class ProductDelete(LoginRequiredMixin, DeleteView):
 # 6- CLick plaace order the status will be changed and the cart will be wmpty // delete cart
 # Alsoooooooo we have to check the stock !!!
 # def Cart(request, user_id, shop_id):
-#     Order.objects.create(user_id=user_id, shop_id=shop_id)
+#     Cart.objects.create(user_id=user_id, shop_id=shop_id)
 
 
-@login_required
-def add_to_cart(request, product_id, user_id, shop_id):
-    # GET THE PRODUCT INFORMATION
-    product = Product.objects.get(pk=product_id)
-    # cart, created = Order.objects.get_or_create(user=user_id)
-    cart = Order.objects.get(user=user_id, ordered=False)
-    # IFFFF CARTTT IS NULLLL
-    if not cart:
-        cart = Order.objects.create(user=user_id, ordered=False)
-    # IF there is A cart
-    if cart:
-        # CHECKKK IFFF THE SHOP = THE NEW PRODUCT
-        if product.shop == shop_id:
-            cart_item, item_created = OrderItem.objects.get_or_create(
-                cart=cart, product=product_id)
-            if not item_created:
-                cart_item.quantity = cart_item.quantity + 1
-                cart_item.save()
-    return render(request, 'shops/index.html')
+# @login_required
+# def add_to_cart(request, product_id, user_id, shop_id):
+#     # GET THE PRODUCT INFORMATION
+#     product = Product.objects.get(pk=product_id)
+#     # cart, created = Cart.objects.get_or_create(user=user_id)
+#     cart = Cart.objects.get(user=user_id, ordered=False)
+#     # IFFFF CARTTT IS NULLLL
+#     if not cart:
+#         cart = Cart.objects.create(user=user_id, ordered=False)
+#     # IF there is A cart
+#     if cart:
+#         # CHECKKK IFFF THE SHOP = THE NEW PRODUCT
+#         if product.shop == shop_id:
+#             cart_item, item_created = CartItem.objects.get_or_create(
+#                 cart=cart, product=product_id)
+#             if not item_created:
+#                 cart_item.quantity = cart_item.quantity + 1
+#                 cart_item.save()
+#     return render(request, 'shops/index.html')
 
 # Function to get the product id and remove it from cart
+# @login_required
+# def add_to_cart(request, product_id, user_id, shop_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart, created = Cart.objects.get_or_create(user=user_id)
+#     cart_item, item_created = CartItem.objects.get_or_create(
+#         cart=cart, product=product)
+#     if not item_created:
+#         cart_item.quantity += 1
+#         cart_item.save()
+#     return render(request, 'cart/cart.html')
 
 
-@login_required
-def remove_from_cart(request, product_id):
-    # Get the product from Product_id
-    product = Product.objects.get(pk=product_id)
-    # GET the cart by the user id // Retrieve cart created by user
-    cart = Order.objects.get(user=request.user)
-    try:
-        # Retrieve cart item from the user cart
-        cart_item = cart.objects.get(product_id=product_id)
-        if cart_item.quantity >= 1:
-            cart_item.delete()
-    except OrderItem.DoesNotExist:
-        pass
+# @login_required
+# def view_cart(request, user_id):
+#     try:
+#         cart = Cart.objects.get(user_id=user_id)
+#         cart_items = CartItem.objects.filter(cart=cart)
+#     except:
+#         cart = None
+#         cart_items = None
+#     return render(request, 'cart/cart.html', {'cart_items': cart_items})
 
-    return render(request, 'cart/cart.html', {'cart': cart})
+# #     try:
+#         cart = Cart.objects.get(id=user_id)
+#     except Cart.DoesNotExist:
+#         cart = None
+#     return render(request, 'cart/cart.html', {'cart': cart})
+
+# def get_total_item_price(self):
+#     return self.quantity * self.item.price
+
+# def get_total(self):
+#     total = 0
+#     for order_item in self.items.all():
+#         total += order_item.get_final_price()
+
+
+# @login_required
+# def place_order(request, user_id):
+#     cart = Cart.objects.get(user_id=user_id)
+#     cart.ordered = True
+#     # DECREASE THE QUANTITY FOR EACT PRODUCT IN THE ITEM
+
+
+# @login_required
+# def remove_from_cart(request, product_id):
+#     # Get the product from Product_id
+#     product = Product.objects.get(pk=product_id)
+#     # GET the cart by the user id // Retrieve cart created by user
+#     cart = Cart.objects.get(user=request.user)
+#     try:
+#         # Retrieve cart item from the user cart
+#         cart_item = cart.objects.get(product_id=product_id)
+#         if cart_item.quantity >= 1:
+#             cart_item.delete()
+#     except CartItem.DoesNotExist:
+#         pass
+
+#     return render(request, 'cart/cart.html', {'cart': cart})
 
 # Get the the data in the cart
 
 
-@login_required
-def view_cart(request, user_id):
-    cart = Order.objects.get(user_id=user_id)
-    cart_items = OrderItem.objects.filter(cart=cart)
-    return render(request, 'cart.html', {'cart_items': cart_items})
 # IF THE USER CLICKED ON INCRESE
 
+# @login_required
+# def increase_cart_item(request, product_id, user_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = Cart.objects.get(user_id=user_id)
+#     cart_item, created = CartItem.objects.get_or_create(
+#         cart=cart, product=product)
+#     cart_item.quantity += 1
+#     cart_item.save()
 
-@login_required
-def increase_cart_item(request, product_id, user_id):
-    product = Product.objects.get(pk=product_id)
-    cart = Order.objects.get(user_id=user_id)
-    cart_item, created = OrderItem.objects.get_or_create(
-        cart=cart, product=product)
-    cart_item.quantity += 1
-    cart_item.save()
-
-    return redirect('cart')
-# Decrese the Amount In Cart
+#     return redirect('cart/cart.html')
+# # Decrese the Amount In Cart
 
 
-@login_required
-def decrease_cart_item(request, product_id, user_id):
-    product = Product.objects.get(pk=product_id)
-    cart = Order.objects.get(user_id=user_id)
-    cart_item = cart.objects.get(product_id=product_id)
-    # WRONG AS THE QUANTITY IS IN ORDERITEM ???
-    if cart_item.product.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
-        cart_item.delete()
-    return redirect('cart')
+# @login_required
+# def decrease_cart_item(request, product_id, user_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = Cart.objects.get(user_id=user_id)
+#     cart_item = cart.objects.get(product_id=product_id)
+#     # WRONG AS THE QUANTITY IS IN ORDERITEM ???
+#     if cart_item.product.quantity > 1:
+#         cart_item.quantity -= 1
+#         cart_item.save()
+#     else:
+#         cart_item.delete()
+#     return redirect('cart')
 
 # INCOMPLETE
 # increase the size from stock
 
 
-@login_required
-def place_order(request, user_id):
-    cart = Order.objects.get(user_id=user_id)
-    cart.ordered = True
-
-#     OrderItem.objects.get(id=user_id).item.add(product_id)
+#     CartItem.objects.get(id=user_id).item.add(product_id)
 #     return messages.info("This item quantity was ADDED.")
-    # # cart = Order(request)
+    # # cart = Cart(request)
     # # ERRROOOORRRR HEREEEE ??????
-    # item = get_object_or_404(OrderItem, id=product_id)
+    # item = get_object_or_404(CartItem, id=product_id)
     # # cart.add(product_id)
-    # order_item, created = OrderItem.objects.get_or_create(
+    # order_item, created = CartItem.objects.get_or_create(
     #     item=item,
     #     user=request.user,
     #     ordered=False
     # )
-    # order_qs = Order.objects.filter(user=request.user, ordered=False)
+    # order_qs = Cart.objects.filter(user=request.user, ordered=False)
     # if order_qs.exists():
     #     order = order_qs[0]
     #     # check if the order item is in the order
@@ -215,7 +246,7 @@ def place_order(request, user_id):
 
 # def Cart(request, user_id):
 #     try:
-#         cart = Order.objects.get(id=user_id)
-#     except Order.DoesNotExist:
+#         cart = Cart.objects.get(id=user_id)
+#     except Cart.DoesNotExist:
 #         cart = None
 #     return render(request, 'cart/cart.html', {'cart': cart})
