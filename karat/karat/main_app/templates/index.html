@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1> welcome to Karat </h1>
 
+<h2> 24K : {{gold_prices.price_gram_24k}} </h2>
+<h2> 22K :
+  {{ gold_prices.price_gram_22k }}
+</h2>
+<h2> 21K :
+  {{ gold_prices.price_gram_21k }}
+</h2>
+<h2> 18K :
+  {{ gold_prices.price_gram_18k }}
+</h2>
 
+<figure id="container">
+  <figure id="slideshow">
+    <img src="https://i.postimg.cc/zD7PCMTw/Screenshot-2023-11-12-170702.png" alt>
+    <img src="https://i.postimg.cc/mgzpwLsx/Screenshot-2023-11-12-172923.png" alt>
+    <img src="https://i.postimg.cc/yYbP8zzd/Screenshot-2023-11-12-172438.png" alt>
+  </figure>
+</figure>
 
 {% endblock %}

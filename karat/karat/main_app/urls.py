@@ -30,4 +30,8 @@ urlpatterns = [
   path('products/<category>/products_by_category/', views.category_products , name = 'products_by_category'), # products by category
 
   # display products by shops
+
+  #API
+  # path('gold/', views.gold),
+
 ]

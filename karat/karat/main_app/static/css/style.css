@@ -325,6 +325,72 @@ body {
 /* product card style END */
 
 
+
+
+@keyframes fadey { 
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; }
+  }
+
+  
+  figure#slideshow { 
+    width: 100%; 
+    margin: 0 auto; 
+    position: relative; 
+
+  }
+  figure#slideshow img { 
+    position: absolute; 
+    left: 0; top: 0; 
+    width: 100%;
+    height: 100%; 
+    opacity: 0; 
+  }
+  figure#slideshow img:first-child { position: relative; }
+  
+  #container:fullscreen { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+  
+  }
+  #container:-moz-full-screen figure, #container:-ms-full-screen figure, #container:-webkit-fullscreen figure, #container:fullscreen figure { 
+    width: 100%;
+    margin: 0 auto;
+    background: #fff; 
+  }
+  :-webkit-full-screen { 
+    width: 100%; height: 100%; 
+  }
+  *:-moz-full-screen { 
+    background: #fff; 
+  }
+  *:-webkit-full-screen { 
+    background: #fff; 
+  }
+
+
+
+  .card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2px 16px;
+  }
+
+
+
 /* product detail style START */
 
 

@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
 
+#API
+import requests
+import ast
+
 
 # Create your views here.
 class shopCreate(CreateView):
@@ -28,7 +32,32 @@ class shopDelete(DeleteView):
 
 
 def home(request):
-  return render(request, 'index.html')
+  api_key = "goldapi-2estzrloof0srh-io"
+  symbol = "XAU"
+  curr = "SAR"
+
+  url = f"https://www.goldapi.io/api/{symbol}/{curr}"
+  
+  headers = {
+    "x-access-token": api_key,
+    "Content-Type": "application/json"
+  }
+  
+  try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    gold = ast.literal_eval(response.text)
+    gold_prices = {
+      "price_gram_24k": gold["price_gram_24k"]/10,
+      "price_gram_22k": gold["price_gram_22k"]/10,
+      "price_gram_21k": gold["price_gram_21k"]/10,
+      "price_gram_18k": gold["price_gram_18k"]/10,
+
+    }
+    print(gold)
+    return render(request, 'index.html' , {'gold': gold, "gold_prices":gold_prices })
+  except requests.exceptions.RequestException as e:
+    print("Error:", str(e))
 
 def shops_index(request):
   # shops=Shop.objects.filter(user = request.user) 
@@ -138,4 +167,6 @@ def addnewuser(request):
     # error_message= 'Invalid Signup - please try again later' , form.error_messages
     form = AddUser()
   return render(request, 'registration/adduser.html' , {'form' : form, 'error_message':error_message})
+
+
 
