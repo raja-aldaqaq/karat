@@ -9,7 +9,6 @@ from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
 
 
-
 # Create your views here.
 class shopCreate(CreateView):
   model = Shop
