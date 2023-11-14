@@ -33,6 +33,16 @@ SECRET_KEY = 'django-insecure-^s&_&nx2@5*d^k%zwk*^wp(zllzfajhz*-l4g6m85bir)#h4e7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'zainabsameer197@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Zanoob66340077'
+EMAIL_HOST_PASSWORD = 'bgmwhoulusukcsqr'
+
+
 ALLOWED_HOSTS = []
 
 
@@ -124,6 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -149,3 +160,5 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

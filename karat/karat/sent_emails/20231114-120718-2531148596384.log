@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: zainabsameer197@gmail.com
+Date: Tue, 14 Nov 2023 09:07:18 -0000
+Message-ID: <169995283888.24500.6680777799956279476@Zainab>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/MTg/bxnlo6-8b7865cfef8b077a415b67231b039e80/
+
+Your username, in case you’ve forgotten: nooby_187
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------
