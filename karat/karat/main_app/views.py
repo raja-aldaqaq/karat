@@ -6,6 +6,10 @@ from .models import Shop, Product, User, categories
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 #API
 import requests
@@ -180,6 +184,14 @@ class userUpdate(LoginRequiredMixin, UpdateView):
 def users_detail(request, user_id):
   user = User.objects.get(id=user_id)
   return render(request, 'users/profile.html', {'user': user})
+
+
+
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'users/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('/index/')
 
 
 

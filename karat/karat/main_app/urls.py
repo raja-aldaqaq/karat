@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import ChangePasswordView
+
 
 
 urlpatterns = [
@@ -36,5 +38,8 @@ urlpatterns = [
 
   #API
   # path('gold/', views.gold),
+
+  path('user/change_password/', ChangePasswordView.as_view(), name='change_password'),
+
 
 ]
