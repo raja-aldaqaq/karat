@@ -3,7 +3,15 @@
 {% block content %}
   <h1>{{ product.name }}</h1>
   {% load static %}
-  <img src="{% static product.image|cut:'main_app/static/' %}" alt="">
+  <div class="img-zoom-container">
+  <img id="myimage" width="300" height="240" src="{% static product.image|cut:'main_app/static/' %}" alt="">
+  <div id="myresult" class="img-zoom-result"></div>
+
+  <script>
+    imageZoom("myimage", "myresult");
+    </script>
+
+</div>
   <p>{{ product.description }}</p>
   <!-- Add other product details as needed -->
 

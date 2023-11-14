@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: zainabsameer197@gmail.com
+Date: Tue, 14 Nov 2023 08:36:48 -0000
+Message-ID: <169995100828.40500.10709344588966817657@Zainab>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/MQ/bxnk9c-e7313b041905e0beb2c36bf0ce6ee146/
+
+Your username, in case you’ve forgotten: zainabsameer
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

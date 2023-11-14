@@ -15,7 +15,7 @@ class Shop(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'shop_id' : self.id})
+        return reverse('shop_detail', kwargs={'pk' : self.id})
     def __str__(self):
         return f'{self.name}'
 
@@ -61,6 +61,18 @@ class Profile(models.Model):
     
 
 
+# class User(models.Model):
+#     first_name = models.CharField
+#     last_name = models.CharField
+#     email = models.EmailField
+
+#     def get_absolute_url(self):
+#         return reverse('detail', kwargs={'user_id' : self.id})
+#     def __str__(self):
+#         return f'{self.name}'
+
+    
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -82,3 +94,4 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"
         
+

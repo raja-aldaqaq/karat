@@ -2,13 +2,15 @@
 
 {% block content %}
 
-<h1> All Shop </h1>
+<h1 class="title"> All Shop </h1>
 
+<div class="shop_list">
 {% for shop in shops %}
-  <div class="card" >
-    <a href=" {% url 'detail' shop.id %}">
-    <div class="container">
-      <span>{{ shop.name }}</span>
+<div class="page-wrapper">
+  <div class="page-inner">
+      <div class="el-wrapper">    <a href=" {% url 'shop_detail' shop.id %}">
+      <div class="box-up">
+        <span class="size">{{ shop.name }}</span>
       <p>CR Number: {{ shop.CR }}</p>
       <p>Email: {{ shop.Email }}</p>
       <p>Address: {{ shop.address }}</p>
@@ -19,10 +21,11 @@
       {% load static %}
       <img width="100px" height="100px" src="{% static shop.logo|cut:'main_app/static/' %}" />
     </div>
-
   </a>
+  
+  </div>
   </div>
 {% endfor %}
-
+</div>
 
 {% endblock %}

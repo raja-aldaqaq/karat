@@ -1,11 +1,14 @@
 from django.urls import path
 from . import views
+from .views import ChangePasswordView
+
 
 
 urlpatterns = [
   path('', views.home, name='home'),
   path('shops/', views.shops_index, name='index'),
-  path('shops/<int:shop_id>', views.shops_detail, name='detail'),
+  path('shops/my_shopdetail', views.my_shopdetail, name='my_shopdetail'),
+  path('shops/detail/<int:pk>', views.shopDetail.as_view(), name='shop_detail'),
 
   path('shop/create', views.shopCreate.as_view(), name='shop_create'),
   path('shops/<int:pk>/update/', views.shopUpdate.as_view(), name='shops_update'),
@@ -15,6 +18,9 @@ urlpatterns = [
   path('accounts/signup/', views.signup, name='signup'),
   path('profile/',views.profile, name='profile'),
   path('adduser/',views.addnewuser, name='adduser'),
+  path('users/<int:user_id>', views.users_detail, name='detail'),
+  path('users/<int:pk>/update/', views.userUpdate.as_view(), name='users_update'),
+
 
 
   # URLs for Product CRUD Operations
@@ -33,6 +39,9 @@ urlpatterns = [
 
   #API
   # path('gold/', views.gold),
+
+  path('user/change_password/', ChangePasswordView.as_view(), name='change_password'),
+
 
   # ADD TO CART - When Clicked On Click Cart //ADDS to the order model
   # path('add_to_cart/<int:product_id>/<int:user_id>/<int:shop_id>/', views.add_to_cart, name='add_to_cart'),

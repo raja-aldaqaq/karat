@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
-
-<h2> 24K : {{gold_prices.price_gram_24k}} </h2>
+<figure id="container">
+  <figure >
+<h2> 24K : {{gold_prices.price_gram_24k}} BD </h2>
 <h2> 22K :
-  {{ gold_prices.price_gram_22k }}
+  {{ gold_prices.price_gram_22k }} BD
 </h2>
 <h2> 21K :
-  {{ gold_prices.price_gram_21k }}
+  {{ gold_prices.price_gram_21k }} BD
 </h2>
 <h2> 18K :
-  {{ gold_prices.price_gram_18k }}
+  {{ gold_prices.price_gram_18k }} BD
 </h2>
+</figure>
+</figure>
+
 
 <figure id="container">
   <figure id="slideshow">
