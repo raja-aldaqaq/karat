@@ -108,9 +108,11 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
+
         'NAME': 'karat',
         'USER' : 'postgres',
         'PASSWORD' : 'Zanoob66'
+
     }
 }
 

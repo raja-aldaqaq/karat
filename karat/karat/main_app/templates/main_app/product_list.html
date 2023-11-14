@@ -27,7 +27,7 @@
               <div class="h-bg-inner"></div>
             </div>
   
-            <a class="cart" href="#">
+            <a class="cart" href="{% url 'add_to_cart' product.id %}">
               <span class="price">{{ product.price }} BHD</span>
               <span class="add-to-cart">
                 <span class="txt">Add to cart</span>
