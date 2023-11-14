@@ -33,6 +33,9 @@ class shopDelete(DeleteView):
   model = Shop
   success_url = '/shops/'
 
+class shopDetail(DetailView):
+  model = Shop
+
 
 def home(request):
   api_key = "goldapi-2estzrloof0srh-io"
@@ -69,9 +72,10 @@ def shops_index(request):
   print(shops)
   return render(request, 'shops/index.html', {'shops':shops})
 
-def shops_detail(request, shop_id):
-  shop = Shop.objects.get(id=shop_id)
-  return render(request, 'shops/detail.html', {'shop': shop})
+def my_shopdetail(request):
+  user = request.user
+  shop = Shop.objects.get(user=user)
+  return render(request, 'shops/my_shopdetail.html', {'shop': shop})
 
 def signup(request):
   error_message=''

@@ -7,7 +7,8 @@ from .views import ChangePasswordView
 urlpatterns = [
   path('', views.home, name='home'),
   path('shops/', views.shops_index, name='index'),
-  path('shops/<int:shop_id>', views.shops_detail, name='detail'),
+  path('shops/my_shopdetail', views.my_shopdetail, name='my_shopdetail'),
+  path('shops/detail/<int:pk>', views.shopDetail.as_view(), name='shop_detail'),
 
   path('shop/create', views.shopCreate.as_view(), name='shop_create'),
   path('shops/<int:pk>/update/', views.shopUpdate.as_view(), name='shops_update'),

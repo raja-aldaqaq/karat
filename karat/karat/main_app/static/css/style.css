@@ -43,6 +43,13 @@ footer.page-footer{
   justify-content: space-between;
 }
 
+.shop_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 
 /* product card style start */
 .d-flex {

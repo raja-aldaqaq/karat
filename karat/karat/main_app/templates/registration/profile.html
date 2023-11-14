@@ -8,12 +8,11 @@
     <span> First name :{{ user.first_name }}</span>
     <p> Last name: {{ user.last_name }}</p>
     <p> Email: {{ user.email }}</p>
-    <p> Type: {{ user.user_type }}</p>
   </div>
 
   <div>
     <a href="{% url 'users_update' user.id %}">Edit My Profile</a>
-    <a href="{% url 'password_reset' %}">Reset Password</a>
+<br>
     <a href="{% url 'change_password' %}">change Password</a>
 
 

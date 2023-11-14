@@ -29,7 +29,7 @@
         <ul>
           <li class="left brand-logo">
               <a href="{% url 'home' %}">
-                <img src="../static/logo/logo.png"  width="60" height="60">
+                <img src="https://i.ibb.co/51FMG6w/logo-2.png"  width="60" height="60">
               </a>
           </li>
         </ul>
@@ -38,6 +38,7 @@
           {% if user.is_authenticated %}
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
+          <li><a href="{% url 'my_shopdetail' %}">My Shop</a></li>
           <li><a href="{% url 'products_create' %}">Add a Product</a></li>
           <li><a href="{% url 'products_index' %}">All Products</a></li>
           <li><a href="{% url 'categories' %}">Categories</a></li>
