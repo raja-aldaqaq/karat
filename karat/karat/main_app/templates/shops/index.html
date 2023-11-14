@@ -8,7 +8,13 @@
 {% for shop in shops %}
 <div class="page-wrapper">
   <div class="page-inner">
-      <div class="el-wrapper">    <a href=" {% url 'shop_detail' shop.id %}">
+
+      <div class="shop-wrapper">       
+      <div> 
+      {% load static %}
+      <img class="shop-pic" width="auto" height="200px" src="{% static shop.logo|cut:'main_app/static/' %}" />
+    </div>  
+    <br>
       <div class="box-up">
         <span class="size">{{ shop.name }}</span>
       <p>CR Number: {{ shop.CR }}</p>
@@ -16,13 +22,7 @@
       <p>Address: {{ shop.address }}</p>
       <p>Phone Number: {{ shop.phone }}</p>
     </div>
-
-    <div> 
-      {% load static %}
-      <img width="100px" height="100px" src="{% static shop.logo|cut:'main_app/static/' %}" />
-    </div>
   </a>
-  
   </div>
   </div>
 {% endfor %}

@@ -2,20 +2,25 @@
 
 {% block content %}
 
-<figure id="container">
-  <figure >
-<h2> 24K : {{gold_prices.price_gram_24k}} BD </h2>
-<h2> 22K :
-  {{ gold_prices.price_gram_22k }} BD
-</h2>
-<h2> 21K :
-  {{ gold_prices.price_gram_21k }} BD
-</h2>
-<h2> 18K :
-  {{ gold_prices.price_gram_18k }} BD
-</h2>
-</figure>
-</figure>
+<!-- <figure >
+  <figure id="apibar" > -->
+<div class="apis">
+  <h6 class="api"> 24K : <span class="greenn">{{gold_prices.price_gram_24k}}</span> BD </h6>
+  <h6 class="api"> 22K :
+    <span class="greenn">
+      {{ gold_prices.price_gram_22k }}</span> BD
+  </h6>
+  <h6 class="api"> 21K :
+    <span class="greenn">
+      {{ gold_prices.price_gram_21k }}</span> BD
+  </h6>
+  <h6 class="api"> 18K :
+    <span class="greenn">
+      {{ gold_prices.price_gram_18k }}</span> BD
+  </h6>
+</div>
+<!-- </figure>
+</figure> -->
 
 
 <figure id="container">
