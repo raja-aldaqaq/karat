@@ -30,11 +30,13 @@ categories = (
     ('G', 'Bangles'),
     )
 
+karat=((24, '24 k'),(22, '22 k'),(21, '21 k'),(18, '18 k'),(14, '14 k'))
+
 class Product(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
     price = models.FloatField()
-    karat = models.IntegerField()
+    karat = models.IntegerField(choices=karat, default=karat[2])
     weight = models.FloatField()
     quantity_available = models.IntegerField()
     image = models.ImageField(upload_to="main_app/static/uploads", default="")
@@ -65,8 +67,6 @@ class Order(models.Model):
     total_amount = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
-    # ONLY THE PRODUCTS INSIDE ORDERITEM
-    # products = models.ManyToManyField(Product, through='OrderItem')
 
     def __str__(self):
         return self.user.username
@@ -81,3 +81,4 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"
+        

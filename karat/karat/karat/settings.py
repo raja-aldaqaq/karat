@@ -84,26 +84,26 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Remote Database
-DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : os.getenv('DATABASEHOST'),
-        'PORT' : '5432',
-        'USER': os.getenv('DATABASEUSER'),
-        'PASSWORD': os.getenv('DATABASEPASSWORD'),
-        'NAME': os.getenv('DATABASEUSER'),
-    }
-}
-
-# Localhost Database
 # DATABASES = {
 #     'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'karat',
-#         'USER' : 'postgres',
-#         'PASSWORD' : '42822Rajaa42822'
+#         'HOST' : os.getenv('DATABASEHOST'),
+#         'PORT' : '5432',
+#         'USER': os.getenv('DATABASEUSER'),
+#         'PASSWORD': os.getenv('DATABASEPASSWORD'),
+#         'NAME': os.getenv('DATABASEUSER'),
 #     }
 # }
+
+# Localhost Database
+DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'karat2',
+        'USER' : 'postgres',
+        'PASSWORD' : '42822Rajaa42822'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

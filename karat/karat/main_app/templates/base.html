@@ -13,15 +13,7 @@
   <script type="text/javascript" src="{% static 'JS/script.js' %}"></script>
 
 </head>
-<!-- <style>
-  .brand-logo{
-  pointer-events: none;
-}
 
-.logoE{
-  pointer-events:visible;
-}
-</style> -->
 <body>
   <header class="navbar-fixed">
     <nav class="nav">
@@ -29,7 +21,7 @@
         <ul>
           <li class="left brand-logo">
               <a href="{% url 'home' %}">
-                <img src="../static/logo/logo.png"  width="60" height="60">
+                <img src="https://i.ibb.co/51FMG6w/logo-2.png"  width="60" height="60">
               </a>
           </li>
         </ul>
@@ -43,6 +35,7 @@
           <li><a href="{% url 'categories' %}">Categories</a></li>
           <li><a href="{% url 'my_products' %}">My Products</a></li>
           <li><a href="{% url 'profile' %}"> My Profile </a></li>
+          <li><a href="">Cart<img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
           <li><a href="{% url 'adduser' %}"> Add User </a></li>
           <li><a href="{% url 'logout' %}"> LogOut</a></li>
           Welcome {{ user.username}}
