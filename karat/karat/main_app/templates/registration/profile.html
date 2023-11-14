@@ -1,18 +1,29 @@
-{% extends "base.html" %}
-
-{% block title %}Profile Page{% endblock title %}
-
+{% extends 'base.html' %}
 {% block content %}
 
-    <div>
-        <h1> User Name : {{user.username}}</h1>
+<h1>Show Profile</h1>
+<div>
+  <div>   
+    <p> User name: {{ user.username }}</p>
+    <span> First name :{{ user.first_name }}</span>
+    <p> Last name: {{ user.last_name }}</p>
+    <p> Email: {{ user.email }}</p>
+    <p> Type: {{ user.user_type }}</p>
+  </div>
 
-    </div>
+  <div>
+    <a href="{% url 'users_update' user.id %}">Edit My Profile</a>
+  </div>
+</div>
 
-<form action="{% url 'profile' %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn" value="profile">
-</form>
 
-{% endblock content %}
+      
+
+
+      </div>
+      </div>
+  </div>
+  <div>
+
+  
+{% endblock %}

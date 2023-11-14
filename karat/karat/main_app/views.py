@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView , UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product, Profile, categories
+from .models import Shop, Product, User, categories
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
@@ -58,6 +57,7 @@ def home(request):
     return render(request, 'index.html' , {'gold': gold, "gold_prices":gold_prices })
   except requests.exceptions.RequestException as e:
     print("Error:", str(e))
+    return render(request, 'index.html')
 
 def shops_index(request):
   # shops=Shop.objects.filter(user = request.user) 
@@ -151,7 +151,7 @@ def profile(request):
     else:
         form = SignUpForm()
     # return render(request, 'signup.html', {'form': form})
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'registration/profile.html', {'form': form})
 
 
 
@@ -167,6 +167,20 @@ def addnewuser(request):
     # error_message= 'Invalid Signup - please try again later' , form.error_messages
     form = AddUser()
   return render(request, 'registration/adduser.html' , {'form' : form, 'error_message':error_message})
+
+class userUpdate(LoginRequiredMixin, UpdateView):
+  model = User
+  fields = ['username', 'first_name', 'last_name', 'email']
+  success_url = '/profile/'
+
+
+
+
+@login_required
+def users_detail(request, user_id):
+  user = User.objects.get(id=user_id)
+  return render(request, 'users/profile.html', {'user': user})
+
 
 
 

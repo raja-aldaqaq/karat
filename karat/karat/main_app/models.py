@@ -57,3 +57,16 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
+
+# class User(models.Model):
+#     first_name = models.CharField
+#     last_name = models.CharField
+#     email = models.EmailField
+
+#     def get_absolute_url(self):
+#         return reverse('detail', kwargs={'user_id' : self.id})
+#     def __str__(self):
+#         return f'{self.name}'
+
+    
+
