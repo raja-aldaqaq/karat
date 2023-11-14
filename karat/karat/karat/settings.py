@@ -13,11 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv() #initializing this functionality
+load_dotenv()  # initializing this functionality
 
 
-import os
-from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -93,28 +91,41 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Remote Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.getenv('DATABASEHOST'),
+        'PORT': '5432',
+        'USER': os.getenv('DATABASEUSER'),
+        'PASSWORD': os.getenv('DATABASEPASSWORD'),
+        'NAME': os.getenv('DATABASEUSER'),
+    }
+}
+
+# Localhost Database
 # DATABASES = {
 #     'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
-#         'HOST' : os.getenv('DATABASEHOST'),
-#         'PORT' : '5432',
-#         'USER': os.getenv('DATABASEUSER'),
-#         'PASSWORD': os.getenv('DATABASEPASSWORD'),
-#         'NAME': os.getenv('DATABASEUSER'),
+
+#         'NAME': 'karat',
+#         'USER' : 'postgres',
+#         'PASSWORD' : 'Zanoob66'
+
 #     }
 # }
 
 # Localhost Database
-DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'karat',
-        'USER' : 'postgres',
-        'PASSWORD' : 'Zanoob66'
-
-    }
-}
+# Remote Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': 'trumpet.db.elephantsql.com',
+#         'PORT': '5432',
+#         'USER': 'qrsgbhgp',
+#         'PASSWORD': '9NiuGGxC6MDQdaY3Q57-T60KfBtA7xLS',
+#         'NAME': 'qrsgbhgp',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -133,7 +144,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 
 # Internationalization
@@ -161,5 +171,3 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-

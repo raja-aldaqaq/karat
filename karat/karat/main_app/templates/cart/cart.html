@@ -1,7 +1,24 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-
-
-
+<div class="container">
+    <div class="cart-header">
+        <h1>Your Cart</h1>
+    </div>
+    <ul>
+        {% for item in cart_items %}
+        <li class="cart-item">
+            <div class="cart-item-details">
+                <div class="cart-item-name">{{ item.product.name }}</div>
+            </div>
+                <span class="item-quantity">{{ item.quantity }}</span>
+            <div class="cart-item-price" data-price="{{ item.product.price }}">
+                ${{ item.product.price }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <a class="continue-shopping-link" href="#">Continue Shopping</a>
+    <a class="checkout-button" href="#">Checkout</a>
+</div>
 {% endblock %}
