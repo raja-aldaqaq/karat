@@ -34,4 +34,8 @@ urlpatterns = [
   #API
   # path('gold/', views.gold),
 
+  # ADD TO CART - When Clicked On Click Cart //ADDS to the order model
+  # path('add_to_cart/<int:product_id>/<int:user_id>/<int:shop_id>/', views.add_to_cart, name='add_to_cart'),
+  path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+
 ]
