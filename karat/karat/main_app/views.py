@@ -272,10 +272,10 @@ def create_order(user, shop):
     # Order.objects.create(user=user, shop=shop, ordered=False)
 
 
-def view_cart(request, user_id):
+def view_cart(request):
     try:
         cart_items = OrderItem.objects.filter(
-            order__user=user_id, order__ordered=False)
+            order__user=request.user, order__ordered=False)
         print(cart_items)
     except:
         cart_items = None

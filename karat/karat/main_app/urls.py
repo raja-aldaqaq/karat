@@ -54,6 +54,6 @@ urlpatterns = [
     # path('add_to_cart/<int:product_id>/<int:user_id>/<int:shop_id>/', views.add_to_cart, name='add_to_cart'),
     path('add_to_cart/<int:product_id>/',
          views.add_to_cart, name='add_to_cart'),
-    path('view_cart/<int:user_id>/', views.view_cart, name='view_cart'),
+    path('view_cart/', views.view_cart, name='view_cart'),
 
 ]
