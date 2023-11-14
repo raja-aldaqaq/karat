@@ -4,6 +4,7 @@ from django.urls import reverse
 
 # Create your models here.
 
+
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     CR = models.IntegerField()
@@ -11,13 +12,14 @@ class Shop(models.Model):
     address = models.CharField(max_length=100)
     phone = models.IntegerField()
     logo = models.ImageField(upload_to="main_app/static/uploads", default="")
-    user = models.ForeignKey(User , on_delete=models.CASCADE)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'shop_id' : self.id})
+        return reverse('detail', kwargs={'shop_id': self.id})
+
     def __str__(self):
         return f'{self.name}'
+
 
 categories = (
     ('R', 'Rings'),
@@ -28,7 +30,8 @@ categories = (
     ('A', 'Anklets'),
     ('C', 'Chockers'),
     ('G', 'Bangles'),
-    )
+)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=150)
@@ -46,7 +49,7 @@ class Product(models.Model):
         return f'{self.name} from {self.shop}'
 
     def get_absolute_url(self):
-        return reverse('products_detail', kwargs={'pk' : self.id})
+        return reverse('products_detail', kwargs={'pk': self.id})
 
     class Meta:
         ordering = ['-id']
@@ -54,6 +57,30 @@ class Product(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.user.username
-    
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1, null=True)
+    is_ordered = models.BooleanField(default=False, null=True)
+    date_orderd = models.DateTimeField(auto_now=True, null=True)
+    date_added = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.product.name
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_ordered = models.BooleanField(default=False, null=True)
+    items = models.ManyToManyField(CartItem)
+    date_orderd = models.DateTimeField(auto_now=True, null=True)
+
+    def get_cart_items(self):
+        return self.items.all()
+
+    def get_cart_total(self):
+        return sum([(item.product.price) for item in self.items.all()])

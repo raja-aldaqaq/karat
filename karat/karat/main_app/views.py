@@ -1,141 +1,153 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.views.generic.edit import CreateView , UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Shop, Product, Profile, categories
+from .models import Shop, Product, Profile, categories, Cart, CartItem, User
 from django.contrib.auth.decorators import login_required
-from  django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import SignUpForm , AddUser
-
-#API
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import SignUpForm, AddUser
+from django.contrib import messages
+# API
 import requests
 import ast
 
 
 # Create your views here.
 class shopCreate(CreateView):
-  model = Shop
-  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+    model = Shop
+    fields = ['name', 'CR', 'Email', 'address', 'phone', 'logo']
 
-  def form_valid(self, form):
-    form.instance.user = self.request.user
-    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class shopUpdate(UpdateView):
-  model = Shop
-  fields = ['name', 'CR', 'Email' ,'address', 'phone' , 'logo']
+    model = Shop
+    fields = ['name', 'CR', 'Email', 'address', 'phone', 'logo']
+
 
 class shopDelete(DeleteView):
-  model = Shop
-  success_url = '/shops/'
+    model = Shop
+    success_url = '/shops/'
 
 
 def home(request):
-  api_key = "goldapi-2estzrloof0srh-io"
-  symbol = "XAU"
-  curr = "SAR"
+    api_key = "goldapi-2estzrloof0srh-io"
+    symbol = "XAU"
+    curr = "SAR"
 
-  url = f"https://www.goldapi.io/api/{symbol}/{curr}"
-  
-  headers = {
-    "x-access-token": api_key,
-    "Content-Type": "application/json"
-  }
-  
-  try:
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    gold = ast.literal_eval(response.text)
-    gold_prices = {
-      "price_gram_24k": gold["price_gram_24k"]/10,
-      "price_gram_22k": gold["price_gram_22k"]/10,
-      "price_gram_21k": gold["price_gram_21k"]/10,
-      "price_gram_18k": gold["price_gram_18k"]/10,
+    url = f"https://www.goldapi.io/api/{symbol}/{curr}"
 
+    headers = {
+        "x-access-token": api_key,
+        "Content-Type": "application/json"
     }
-    print(gold)
-    return render(request, 'index.html' , {'gold': gold, "gold_prices":gold_prices })
-  except requests.exceptions.RequestException as e:
-    print("Error:", str(e))
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        gold = ast.literal_eval(response.text)
+        gold_prices = {
+            "price_gram_24k": gold["price_gram_24k"]/10,
+            "price_gram_22k": gold["price_gram_22k"]/10,
+            "price_gram_21k": gold["price_gram_21k"]/10,
+            "price_gram_18k": gold["price_gram_18k"]/10,
+
+        }
+        print(gold)
+        return render(request, 'index.html', {'gold': gold, "gold_prices": gold_prices})
+    except requests.exceptions.RequestException as e:
+        print("Error:", str(e))
+
 
 def shops_index(request):
-  # shops=Shop.objects.filter(user = request.user) 
-  shops=Shop.objects.all() 
-  print(shops)
-  return render(request, 'shops/index.html', {'shops':shops})
+    # shops=Shop.objects.filter(user = request.user)
+    shops = Shop.objects.all()
+    print(shops)
+    return render(request, 'shops/index.html', {'shops': shops})
+
 
 def shops_detail(request, shop_id):
-  shop = Shop.objects.get(id=shop_id)
-  return render(request, 'shops/detail.html', {'shop': shop})
+    shop = Shop.objects.get(id=shop_id)
+    return render(request, 'shops/detail.html', {'shop': shop})
+
 
 def signup(request):
-  error_message=''
-  if request.method == 'POST':
-    form = SignUpForm(request.POST)
-    if form.is_valid():
-      user = form.save()
-      login(request, user) #login immedietly after signup
-      return redirect('index') 
-    else :
-      error_message= 'Invalid Signup - please try again later' , form.error_messages
+    error_message = ''
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # login immedietly after signup
+            return redirect('index')
+        else:
+            error_message = 'Invalid Signup - please try again later', form.error_messages
 
-  form = SignUpForm()
-  # context = 
-  return render (request, 'registration/signup.html' , {'form' : form, 'error_message':error_message})
+    form = SignUpForm()
+    # context =
+    return render(request, 'registration/signup.html', {'form': form, 'error_message': error_message})
 
 
 class ProductCreate(LoginRequiredMixin, CreateView):
-  model = Product
-  fields = ['name', 'description', 'category','price', 'karat',  'weight', 'quantity_available', 'image']
+    model = Product
+    fields = ['name', 'description', 'category', 'price',
+              'karat',  'weight', 'quantity_available', 'image']
 
-  def form_valid(self, form):
-    user = self.request.user
-    shop = Shop.objects.get(user=user)
-    form.instance.shop = shop
-    return super().form_valid(form)
+    def form_valid(self, form):
+        user = self.request.user
+        shop = Shop.objects.get(user=user)
+        form.instance.shop = shop
+        return super().form_valid(form)
 
 
 class ProductList(LoginRequiredMixin, ListView):
-  model = Product
+    model = Product
+
 
 class ProductDetail(LoginRequiredMixin, DetailView):
-  model = Product
+    model = Product
 
-  def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Check if the current user added the product
         context['is_owner'] = self.object.shop.user == self.request.user
         return context
 
+
 def my_products(request):
-  user = request.user
-  shop = Shop.objects.get(user=user)
-  products=Product.objects.filter(shop=shop)
-  return render(request, 'products/my_products.html', {'products':products})
+    user = request.user
+    shop = Shop.objects.get(user=user)
+    products = Product.objects.filter(shop=shop)
+    return render(request, 'products/my_products.html', {'products': products})
 
 
 def category(request):
-  return render(request, 'products/categories.html', {'categories':categories})
+    return render(request, 'products/categories.html', {'categories': categories})
 
 
-def category_products(request,category):
-  # category = request.category
-  for category_c, name in categories:
-    if category_c == category:
-      category_name = name
-      break
+def category_products(request, category):
+    # category = request.category
+    for category_c, name in categories:
+        if category_c == category:
+            category_name = name
+            break
 
-  products=Product.objects.filter(category=category)
-  return render(request, 'products/products_by_category.html', {'products':products, 'category_name':category_name})
+    products = Product.objects.filter(category=category)
+    return render(request, 'products/products_by_category.html', {'products': products, 'category_name': category_name})
+
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
-  model = Product
-  fields = ['name', 'description','category','price', 'karat', 'weight','quantity_available', 'image']
+    model = Product
+    fields = ['name', 'description', 'category', 'price',
+              'karat', 'weight', 'quantity_available', 'image']
+
 
 class ProductDelete(LoginRequiredMixin, DeleteView):
-  model = Product
-  success_url = '/products/'
+    model = Product
+    success_url = '/products/'
+
 
 @login_required
 def profile(request):
@@ -154,19 +166,46 @@ def profile(request):
     return render(request, 'registration/login.html', {'form': form})
 
 
-
 def addnewuser(request):
-  error_message=''
-  if request.method == 'POST':
-    form = AddUser(request.POST)
-    if form.is_valid():
-      user = form.save()
-      login(request, user) #login immedietly after signup
-      return redirect('index') 
-  else :
-    # error_message= 'Invalid Signup - please try again later' , form.error_messages
-    form = AddUser()
-  return render(request, 'registration/adduser.html' , {'form' : form, 'error_message':error_message})
+    error_message = ''
+    if request.method == 'POST':
+        form = AddUser(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # login immedietly after signup
+            return redirect('index')
+    else:
+        # error_message= 'Invalid Signup - please try again later' , form.error_messages
+        form = AddUser()
+    return render(request, 'registration/adduser.html', {'form': form, 'error_message': error_message})
 
 
+@login_required
+def view_cart(request, user_id):
+    try:
+        cart = Cart.objects.get(user_id=user_id)
+        cart_items = CartItem.objects.filter(cart=cart)
+    except:
+        cart = None
+        cart_items = None
+    return render(request, 'cart/cart.html', {'cart_items': cart_items})
 
+
+@login_required()
+def add_to_cart(request, product_id):
+    user = User.objects.get(pk=request.user.id)
+    product = Product.objects.get(id=product_id)
+    order_item = CartItem.objects.create(product=product)
+    cart = Cart.objects.filter(user=user, is_ordered=False).count()
+    print(cart)
+    if cart == 0:
+        cart = Cart.objects.create(user=user, is_ordered=False)
+        cart.items.add(order_item)
+        cart.save()
+    else:
+        cart = Cart.objects.get(user=user, is_ordered=False)
+        cart.items.add(order_item)
+        cart.save()
+    # show confirmation message and redirect back to the same page
+    messages.info(request, "item added to cart")
+    # return redirect('/categories')
