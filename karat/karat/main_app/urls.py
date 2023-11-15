@@ -49,7 +49,7 @@ urlpatterns = [
   path('view_cart/<int:user_id>/', views.view_cart, name='view_cart'),
   path('increase_quantity/<int:product_id>/', views.increase_quantity, name='increase_quantity'),
   path('decrease_quantity/<int:product_id>/', views.decrease_quantity, name='decrease_quantity'),
-
+  path('place_order/<int:order_id>/', views.place_order, name='place_order'),
 
   path('orders/', views.OrderList.as_view(), name='order_index'), 
 
