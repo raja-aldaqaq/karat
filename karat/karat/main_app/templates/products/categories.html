@@ -5,20 +5,20 @@
 <ul>
   {% for category in categories %}
 
-  <div class="product_list">
+  <div class="c_list">
     <div class="page-wrapper">
       <div class="page-inner">
-        <div class="row">
+        <div class="row c_list">
           <div class="el-wrapper">
-            <a href="{% url 'products_by_category' category.0 %}">
-              {{ category.1 }}</a>
-            <div class="box-up">
+            <a href="{% url 'products_by_category' category.0 %}"><button class="btn">{{ category.1 }}</button>
+              </a>
+            <!-- <div class="box-up">
 
               <div class="img-info">
                 {% load static %}
-                <img class="img" src="/static/categories/2386066.png" href="{% url 'products_by_category' category.0 %}" >
+                <img class="img" src="/static/categories/2386066.png">
               </div>           
-            </div>
+            </div> -->
             </a>
 
 

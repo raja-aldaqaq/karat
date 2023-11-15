@@ -4,7 +4,11 @@
 .nav{
   background-color: rgb(4, 4, 63);
 }
-
+.c_list{
+  display: flex;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+}
 .apis{
   /* background-color: #515151; */
   display: flex;
@@ -652,7 +656,9 @@ body {
 
 .t{
   color:  rgb(228, 186, 73) !important;
+
 }
+
 
 
 
