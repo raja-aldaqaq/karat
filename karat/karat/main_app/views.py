@@ -244,9 +244,9 @@ def add_to_cart(request, product_id):
         add_item(current_user, product)
 
             
-        return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
+        return redirect('view_cart', user_id=current_user.id)
 
-    return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
+    return redirect('view_cart', user_id=current_user.id)
 
 
 

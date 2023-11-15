@@ -40,9 +40,10 @@
           <li><a href="{% url 'my_products' %}">My Products</a></li>
 
           <li><a href="{% url 'profile' %}"> My Profile </a></li>
-          <li><a href="{% url 'view_cart' user.id %}">Cart<img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
+          
           <li><a href="{% url 'adduser' %}"> Add User </a></li>
-          <li><a href=""><img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
+          <li><a href="{% url 'view_cart' user.id %}"><img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
+          <!-- <li><a href=""><img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li> -->
 
           <li><a href="{% url 'logout' %}"> Log Out</a></li>
           {% else %}
