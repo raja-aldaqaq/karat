@@ -5,6 +5,10 @@
   {% load static %}
   <div class="img-zoom-container">
   <img id="myimage" width="300" height="240" src="{% static product.image|cut:'main_app/static/' %}" alt="">
+
+  <br>
+  
+
   <div id="myresult" class="img-zoom-result"></div>
 
   <script>
@@ -12,11 +16,15 @@
     </script>
 
 </div>
-  <p>{{ product.description }}</p>
+  <p>description: {{ product.description }}</p>
+  <h6>price : {{ product.price }}</h6>
+  <h6>karat :{{ product.karat }}</h6>
+  <h6>weight :{{ product.weight }}</h6>
+
   <!-- Add other product details as needed -->
 
   {% if is_owner %}
-  <a href="{% url 'products_update' product.id %}">Edit</a>
+  <a href="{% url 'products_update' product.id %}" >Edit</a>
   <a href="{% url 'products_delete' product.id %}">Delete</a>
   {% else %}
     <a href="">Add to cart</a>

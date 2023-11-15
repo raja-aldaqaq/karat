@@ -4,6 +4,7 @@
 
 <!-- <figure >
   <figure id="apibar" > -->
+<marquee direction="right" class="news" >
 <div class="apis">
   <h6 class="api"> 24K : <span class="greenn">{{gold_prices.price_gram_24k}}</span> BD </h6>
   <h6 class="api"> 22K :
@@ -19,9 +20,14 @@
       {{ gold_prices.price_gram_18k }}</span> BD
   </h6>
 </div>
+</marquee>
 <!-- </figure>
 </figure> -->
 
+<div id="current_date"></p>
+  <script>
+  document.getElementById("current_date").innerHTML = Date();
+  </script>
 
 <figure id="container">
   <figure id="slideshow">
