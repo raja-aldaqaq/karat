@@ -43,7 +43,8 @@ class shopDetail(DetailView):
 
 
 def home(request):
-  api_key = "goldapi-2estzrloof0srh-io"
+  # api_key = "goldapi-is93rloyil90l-io"
+  api_key = "goldapi-is93rloyil90l-i"
   symbol = "XAU"
   curr = "SAR"
 

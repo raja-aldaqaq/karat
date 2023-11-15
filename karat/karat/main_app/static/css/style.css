@@ -2,7 +2,21 @@
 * { box-sizing: border-box; }
 
 .nav{
-  background-color: rgb(1, 1, 35);
+  background-color: rgb(4, 4, 63);
+}
+
+.apis{
+  /* background-color: #515151; */
+  display: flex;
+  flex-direction: row;
+  margin: 5%;
+  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.greenn{
+  color: rgb(3, 90, 2);
 }
 
 body,
@@ -26,7 +40,7 @@ main{
   padding-top: 5%;
 }
 footer.page-footer{
-  background-color: rgb(1, 1, 35);
+  background-color: rgb(4, 4, 63);;
   padding: 0;
   text-align: right;
 }
@@ -86,6 +100,10 @@ body {
 .page-wrapper .page-inner {
   display: table-cell;
   vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  text-align: center;
 }
 
 .el-wrapper {
@@ -93,6 +111,13 @@ body {
   padding: 15px;
   margin: 15px auto;
   background-color: #fff;
+}
+.shop-wrapper {
+  width: 360px;
+  padding: 15px;
+  margin: 15px auto;
+  background-color: #fff;
+  border-style: inset;
 }
 
 @media (max-width: 991px) {
@@ -557,7 +582,11 @@ body {
 
 .img-zoom-container {
   position: relative;
+  display: flex;
+  flex-direction: row;
 }
+
+
 
 .img-zoom-lens {
   position: absolute;
@@ -571,9 +600,56 @@ body {
   border: 1px solid #d4d4d4;
   /*set the size of the result div:*/
   width: 300px;
-  height: 300px;
+  height: 240px;
+
 }
 /* product detail style END */
 
 /* cart style END */
+
+
+.shop-pic{
+  border-radius: 25% 10%;
+}
+
+#apibar{
+  width: auto;
+  height: 50px;
+  background-color: #515151;
+  margin-top: 50px;
+  flex-direction: row;
+
+}
+
+.api{
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  padding: 8px;
+  height: 25px;
+  /* width: 25px; */
+  /* display: inline-block; */
+  
+}
+
+
+.btn {
+  background-color: rgb(228, 186, 73);
+  width: 100%;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  letter-spacing: .5px;
+  -webkit-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+
+}
+.btn:hover, .btn-large:hover, .btn-small:hover {
+  background-color: rgb(4, 4, 63);}
+
+
+
+
+
+
 

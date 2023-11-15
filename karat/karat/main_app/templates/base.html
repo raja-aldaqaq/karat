@@ -28,6 +28,9 @@
 
         <ul class="right">
           {% if user.is_authenticated %}
+          <li>
+            Welcome {{ user.username}}
+          </li>
           <li><a href="{% url 'shop_create' %}">Add a Shop</a></li>
           <li><a href="{% url 'index' %}">View All Shops</a></li>
           <li><a href="{% url 'my_shopdetail' %}">My Shop</a></li>
@@ -35,11 +38,13 @@
           <li><a href="{% url 'products_index' %}">All Products</a></li>
           <li><a href="{% url 'categories' %}">Categories</a></li>
           <li><a href="{% url 'my_products' %}">My Products</a></li>
+
           <li><a href="{% url 'profile' %}"> My Profile </a></li>
           <li><a href="{% url 'view_cart' user.id %}">Cart<img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
           <li><a href="{% url 'adduser' %}"> Add User </a></li>
-          <li><a href="{% url 'logout' %}"> LogOut</a></li>
-          Welcome {{ user.username}}
+          <li><a href=""><img src="https://i.ibb.co/1bBFRY8/icons8-cart-100.png" width="auto" height="20"></a></li>
+
+          <li><a href="{% url 'logout' %}"> Log Out</a></li>
           {% else %}
           <li><a href="{% url 'login' %}"> Login </a></li>
           <li><a href="{% url 'signup' %}"> Signup </a></li>
@@ -61,6 +66,8 @@
     </div>
   </footer>
 
+
+  
 </body>
 
 </html>
