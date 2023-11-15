@@ -251,9 +251,9 @@ def view_cart(request, user_id):
         qty = OrderItem.objects.filter(order_id=cart_items[0].order_id).values('product_id').annotate(quantity=Count('product_id'))
         for q in qty:
           product = Product.objects.get(id=q['product_id'])
-          print('opppppppp:', product)
-          print(q['quantity'])
-          print('price .................',product.price)
+          # print('opppppppp:', product)
+          # print(q['quantity'])
+          # print('price .................',product.price)
           item_amout = q['quantity']*product.price
           print('ffffffffff',item_amout)
           items_context.append ({
@@ -279,12 +279,12 @@ def increase_quantity(request, product_id):
   add_item(current_user, product_to_add)
   return redirect('view_cart', user_id= current_user.id)
 
-def decrease_quantity(request, item_id):
+def decrease_quantity(request, product_id):
   current_user = request.user
-  # print('iddddddddddd:',item_id)
-  # item_to_delete= OrderItem.objects.get(id=item_id)
-  # item_to_delete.delete()
-  # return redirect('view_cart', user_id= current_user.id)
+  print('product_id:',product_id)
+  item_to_delete= OrderItem.objects.filter(product_id=product_id).first()
+  item_to_delete.delete()
+  return redirect('view_cart', user_id= current_user.id)
 
 # @login_required
 # def add_to_cart(request, product_id, user_id, shop_id):
