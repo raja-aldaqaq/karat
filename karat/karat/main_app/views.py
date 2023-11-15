@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.urls import reverse
-
+from datetime import datetime
 
 #API
 import requests
@@ -327,12 +327,14 @@ def view_cart(request, user_id):
             'qty':q, 
             'item_amout': item_amout  
           })
-        
+          order_id=cart_items[0].order_id 
+          return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout, 'order_id':order_id} )
         # print('qtyyyyyyyyyyyyyyyyyy',qty)
     except:
         cart_items = None
+        return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout ,"order_id":0} )
     # return render(request, 'cart/cart.html', {'cart_items': cart_items, 'qty':qty})
-    return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout} )
+    # return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout, 'order_id':cart_items[0].order_id} )
 
 
 def increase_quantity(request, product_id):
@@ -446,3 +448,24 @@ class OrderList(ListView):
   # shop = Shop.objects.get(user=user)
   # products=Product.objects.filter(shop=shop)
   # return render(request, 'cart/order.html', {'products':products}  )
+
+  
+
+def place_order(request, order_id):
+  order = Order.objects.get(id=order_id, ordered=False)
+  order_items = OrderItem.objects.filter(order=order)
+
+  for order_item in order_items:
+    product_price = order_item.product.price
+    order_item.price = product_price
+    order_item.save()
+
+  total_amount = sum(order_item.price for order_item in order_items)
+
+  # Update the order
+  order.total_amount = total_amount
+  order.date = datetime.now().date()
+  order.ordered = True
+  order.save()
+
+  return redirect('order_index')

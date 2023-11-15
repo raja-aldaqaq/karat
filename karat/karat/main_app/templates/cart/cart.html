@@ -3,30 +3,33 @@
 {% block content %}
 
 <div class="container">
-    <div class="cart-header">
-        <h1>Your Cart</h1>
-    </div>
-    <ul>
-        {% for item in items_context %}
-        <li class="cart-item">
-            <div class="cart-item-details">
-            {% load static %}
-            <img class="cart-img"  src="{% static item.product.image|cut:'main_app/static/' %}">
-                <div class="cart-item-name">{{ item.product.name }}</div>
-            </div>
-                <a id="dec" href="{% url 'decrease_quantity' item.product.id %}">-</a>
-                <span class="item-quantity">{{ item.qty.quantity }}</span>
-                <input type="hidden" id="qty" value="{{item.qty.quantity}}" onchange=priceCalc() >
-                <a id="inc" href="{% url 'increase_quantity' item.product.id %}">+</a>
-            <div class="cart-item-price" data-price="{{ item.product.price }}">
-                {{ item.item_amout }}  BHD
-            <input type="hidden" id="price" value="{{item.product.price}}" onchange=priceCalc()>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-    <a class="continue-shopping-link" href="#">Continue Shopping</a>
-    <a class="checkout-button" href="#">Place Order</a>
+  <div class="cart-header">
+    <h1>Your Cart</h1>
+  </div>
+  <ul>
+    {% for item in items_context %}
+    <li class="cart-item">
+      <div class="cart-item-details">
+        {% load static %}
+        <img class="cart-img" src="{% static item.product.image|cut:'main_app/static/' %}">
+        <div class="cart-item-name">
+          {{ item.product.name }}
+        </div>
+      </div>
+      <a id="dec" href="{% url 'decrease_quantity' item.product.id %}">-</a>
+      <span class="item-quantity">
+        {{ item.qty.quantity }}</span>
+      <input type="hidden" id="qty" value="{{item.qty.quantity}}" onchange=priceCalc()>
+      <a id="inc" href="{% url 'increase_quantity' item.product.id %}">+</a>
+      <div class="cart-item-price" data-price="{{ item.product.price }}">
+        {{ item.item_amout }} BHD
+        <input type="hidden" id="price" value="{{item.product.price}}" onchange=priceCalc()>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <a class="continue-shopping-link" href="#">Continue Shopping</a>
+  <a class="checkout-button" href="{% url 'place_order' order_id %}">Place Order</a>
 </div>
 
 {% endblock %}
