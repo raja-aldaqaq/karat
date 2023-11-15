@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
-from .models import Shop, Product, Profile, categories, Order, OrderItem,User
+from .models import Shop, Product, Profile, categories, Order, OrderItem,User 
 from django.contrib.auth.decorators import login_required
 from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
@@ -207,19 +207,60 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
 
 
 
+# @login_required
+# def add_to_cart(request, product_id):
+#     print('fdgchjkcfxdghjnbvdfghjbvgfhjnbvcxdfghjmnbvd')
+#     current_user = request.user
+#     product = Product.objects.get(id=product_id)
+
+#     print('current_user',current_user)
+#     print('product',product)
+#     # Check if the product quantity is greater than 0
+#     if product.quantity_available <= 0:
+#         messages.warning(request, "Product is out of stock.")
+#         return redirect('products_index')
+
+#         # Check if the user has an order with ordered=False
+#         # try:
+#     else:
+#       cart = Order.objects.filter(user=current_user, ordered=False)
+#       if len(cart)>0:
+#         print('cart count',len(cart))
+#         # Check if the product belongs to the same shop as the items in the cart
+#         if cart[0].shop.id == product.shop.id:
+#           add_item(current_user, product)
+#         else:
+#           messages.warning(request, "All items in the cart should be from the same shop.")
+#       else:
+#         print('no cart',len(cart))
+
+#         # except Order.DoesNotExist:
+#         # If no existing cart, create a new order and add the item
+
+#         print('current_user',current_user)
+#         print('product id',product.id)
+#         print('product shop id',product.shop.id)
+#         create_order(current_user, product.shop)
+#         add_item(current_user, product)
+
+            
+#         return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
+
+#     return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
+
+
+
 @login_required
 def add_to_cart(request, product_id):
     print('fdgchjkcfxdghjnbvdfghjbvgfhjnbvcxdfghjmnbvd')
     current_user = request.user
     product = Product.objects.get(id=product_id)
-
     print('current_user',current_user)
     print('product',product)
     # Check if the product quantity is greater than 0
     if product.quantity_available <= 0:
         messages.warning(request, "Product is out of stock.")
         return redirect('products_index')
-
         # Check if the user has an order with ordered=False
         # try:
     else:
@@ -233,23 +274,16 @@ def add_to_cart(request, product_id):
           messages.warning(request, "All items in the cart should be from the same shop.")
       else:
         print('no cart',len(cart))
-
         # except Order.DoesNotExist:
         # If no existing cart, create a new order and add the item
-
         print('current_user',current_user)
         print('product id',product.id)
         print('product shop id',product.shop.id)
         create_order(current_user, product.shop)
         add_item(current_user, product)
-
-            
-        return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
-
-    return render(request, 'cart/cart.html', {'cart': OrderItem.objects.filter(order__user=current_user, order__ordered=False)})
-
-
-
+        return redirect('view_cart', user_id=1)
+        # current_user.id)
+    return redirect('view_cart', user_id=current_user.id)
 
 
 
@@ -280,6 +314,7 @@ def view_cart(request, user_id):
         items_context =[]
         item_amout=0
         qty = OrderItem.objects.filter(order_id=cart_items[0].order_id).values('product_id').annotate(quantity=Count('product_id'))
+        
         for q in qty:
           product = Product.objects.get(id=q['product_id'])
           # print('opppppppp:', product)
@@ -297,7 +332,7 @@ def view_cart(request, user_id):
     except:
         cart_items = None
     # return render(request, 'cart/cart.html', {'cart_items': cart_items, 'qty':qty})
-    return render(request, 'cart/cart.html', {'items_context': items_context, 'qty':qty, 'item_amout':item_amout} )
+    return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout} )
 
 
 def increase_quantity(request, product_id):
@@ -402,3 +437,12 @@ def decrease_quantity(request, product_id):
 # def place_order(request, user_id):
 #     cart = Order.objects.get(user_id=user_id)
 #     cart.ordered = True
+
+
+class OrderList(ListView):
+  # order = order.objects.all().filter(user=request.user)
+  model = Order
+  # user = request.user
+  # shop = Shop.objects.get(user=user)
+  # products=Product.objects.filter(shop=shop)
+  # return render(request, 'cart/order.html', {'products':products}  )

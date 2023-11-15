@@ -10,8 +10,8 @@
     <p>Phone Number: {{ shop.phone }}</p>
 
     <div>
-      <a href="{% url 'shops_update' shop.id %}">Edit</a>
-      <a href="{% url 'shops_delete' shop.id %}">Delete</a>
+      <a href="{% url 'shops_update' shop.id %}"><button class="btn">Edit</button></a>
+      <a href="{% url 'shops_delete' shop.id %}"><button class="btn">Delete</button></a>
     </div>
   </div>
 

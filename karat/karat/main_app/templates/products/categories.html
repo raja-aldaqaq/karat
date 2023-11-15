@@ -4,10 +4,37 @@
 <h1>Categories</h1>
 <ul>
   {% for category in categories %}
-  <li>
-    <a href="{% url 'products_by_category' category.0 %}">{{ category.1 }}</a>
-  </li>
-  {% endfor %}
+
+  <div class="product_list">
+    <div class="page-wrapper">
+      <div class="page-inner">
+        <div class="row">
+          <div class="el-wrapper">
+            <a href="{% url 'products_by_category' category.0 %}">
+              {{ category.1 }}</a>
+            <div class="box-up">
+
+              <div class="img-info">
+                {% load static %}
+                <img class="img" src="/static/categories/2386066.png" href="{% url 'products_by_category' category.0 %}" >
+              </div>           
+            </div>
+            </a>
+
+
+              </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    {% endfor %}
 </ul>
+</div>
+
 
 {% endblock %}
