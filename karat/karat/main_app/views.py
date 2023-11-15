@@ -12,6 +12,9 @@ from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Count
+from django.urls import reverse
+
 
 #API
 import requests
@@ -267,6 +270,52 @@ def create_order(user, shop):
         Order.objects.create(user=user, shop=shop, ordered=False, total_amount=0)
     # Order.objects.create(user=user, shop=shop, ordered=False)
 
+
+def view_cart(request, user_id):
+    try:
+        cart_items = OrderItem.objects.filter(
+            order__user=user_id, order__ordered=False)
+        # print(cart_items)
+        # for item in cart_items:
+        items_context =[]
+        item_amout=0
+        qty = OrderItem.objects.filter(order_id=cart_items[0].order_id).values('product_id').annotate(quantity=Count('product_id'))
+        for q in qty:
+          product = Product.objects.get(id=q['product_id'])
+          # print('opppppppp:', product)
+          # print(q['quantity'])
+          # print('price .................',product.price)
+          item_amout = q['quantity']*product.price
+          print('ffffffffff',item_amout)
+          items_context.append ({
+            'product':product,
+            'qty':q, 
+            'item_amout': item_amout  
+          })
+        
+        # print('qtyyyyyyyyyyyyyyyyyy',qty)
+    except:
+        cart_items = None
+    # return render(request, 'cart/cart.html', {'cart_items': cart_items, 'qty':qty})
+    return render(request, 'cart/cart.html', {'items_context': items_context, 'qty':qty, 'item_amout':item_amout} )
+
+
+def increase_quantity(request, product_id):
+  current_user = request.user
+  print('iddddddddddd:',product_id)
+  # item_id= OrderItem.objects.get(product_id=product_id).id
+  # print('item_id',item_id)
+  product_to_add = Product.objects.get(id=product_id)
+  print('product_to_add',product_to_add)
+  add_item(current_user, product_to_add)
+  return redirect('view_cart', user_id= current_user.id)
+
+def decrease_quantity(request, product_id):
+  current_user = request.user
+  print('product_id:',product_id)
+  item_to_delete= OrderItem.objects.filter(product_id=product_id).first()
+  item_to_delete.delete()
+  return redirect('view_cart', user_id= current_user.id)
 
 
 # @login_required
