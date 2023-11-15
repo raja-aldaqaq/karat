@@ -286,6 +286,7 @@ def decrease_quantity(request, product_id):
   item_to_delete.delete()
   return redirect('view_cart', user_id= current_user.id)
 
+
 # @login_required
 # def add_to_cart(request, product_id, user_id, shop_id):
 #     # GET THE PRODUCT INFORMATION
