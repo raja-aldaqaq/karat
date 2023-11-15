@@ -26,7 +26,7 @@
         {% endfor %}
     </ul>
     <a class="continue-shopping-link" href="#">Continue Shopping</a>
-    <a class="checkout-button" href="#">Place Order</a>
+    <a class="checkout-button" href="{% url 'place_order' order_id %}">Place Order</a>
 </div>
 
 {% endblock %}
