@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ items_context }}
-{{ qty }}
+
 <div class="container">
     <div class="cart-header">
         <h1>Your Cart</h1>
@@ -12,14 +11,16 @@
         <li class="cart-item">
             <div class="cart-item-details">
             {% load static %}
-            <img class="img"  src="{% static item.product.image|cut:'main_app/static/' %}">
+            <img class="cart-img"  src="{% static item.product.image|cut:'main_app/static/' %}">
                 <div class="cart-item-name">{{ item.product.name }}</div>
             </div>
-                <a href="{% url 'decrease_quantity' item.product.id %}">-</a>
+                <a id="dec" href="{% url 'decrease_quantity' item.product.id %}">-</a>
                 <span class="item-quantity">{{ item.qty.quantity }}</span>
-                <a href="{% url 'increase_quantity' item.product.id %}">+</a>
+                <input type="hidden" id="qty" value="{{item.qty.quantity}}" onchange=priceCalc() >
+                <a id="inc" href="{% url 'increase_quantity' item.product.id %}">+</a>
             <div class="cart-item-price" data-price="{{ item.product.price }}">
-                ${{ item.product.price }}
+                {{ item.item_amout }}  BHD
+            <input type="hidden" id="price" value="{{item.product.price}}" onchange=priceCalc()>
             </div>
         </li>
         {% endfor %}
@@ -27,5 +28,27 @@
     <a class="continue-shopping-link" href="#">Continue Shopping</a>
     <a class="checkout-button" href="#">Checkout</a>
 </div>
+
+<script>
+    // price=document.getElementById('price')
+    // qty=document.getElementById('qty')
+    // dec = document.getElementById('dec')
+    // inc = document.getElementById('inc')
+
+    // const priceCalc = ()=>{
+    //     total_price=parseFloat(price.value)*parseInt(qty.value)
+    //     console.log(total_price)
+    //     total = document.querySelector('.cart-item-price');
+    //     total.innerText=total_price + ' BHD'
+    // }
+    // price.addEventListener('change',priceCalc)
+    // qty.addEventListener('change',priceCalc)
+    // dec.addEventListener('click',priceCalc)
+    // inc.addEventListener('click',priceCalc)
+    // dec.addEventListener('onmouseover',priceCalc)
+    // inc.addEventListener('onmouseover',priceCalc)
+
+
+</script>
 
 {% endblock %}
