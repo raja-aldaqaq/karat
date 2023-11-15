@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Remote Database
+# # Remote Database
 # DATABASES = {
 #     'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
@@ -108,11 +108,9 @@ WSGI_APPLICATION = 'karat.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'karat',
+        'NAME': 'karat2',
         'USER' : 'postgres',
-        'PASSWORD' : 'Zanoob66'
-
+        'PASSWORD' : '42822Rajaa42822'
     }
 }
 
