@@ -10,11 +10,15 @@
 
 <form action="{% url 'adduser' %}" method="post">
   {% csrf_token %}
-  <table>
+  <table class="addusers">
     {{ form.as_table }}
   </table>
   <input type="submit" class="btn" value="adduser">
 </form>
+
+<br>
+
+
 
 <script>
   let typeEle = document.getElementById('id_user_type')
