@@ -237,7 +237,19 @@ def create_order(user, shop):
     # Order.objects.create(user=user, shop=shop, ordered=False)
 
 
+def view_cart(request, user_id):
+    try:
+        cart_items = OrderItem.objects.filter(
+            order__user=user_id, order__ordered=False)
+        print(cart_items)
+    except:
+        cart_items = None
+    return render(request, 'cart/cart.html', {'cart_items': cart_items})
 
+
+
+
+    
 # @login_required
 # def add_to_cart(request, product_id, user_id, shop_id):
 #     # GET THE PRODUCT INFORMATION
