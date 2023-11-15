@@ -9,6 +9,7 @@ from  django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm , AddUser
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 #API
 import requests
@@ -241,15 +242,31 @@ def view_cart(request, user_id):
     try:
         cart_items = OrderItem.objects.filter(
             order__user=user_id, order__ordered=False)
-        print(cart_items)
+        # print(cart_items)
+        # for item in cart_items:
+        items_context =[]
+        qty = OrderItem.objects.filter(order_id=cart_items[0].order_id).values('product_id').annotate(quantity=Count('product_id'))
+        for q in qty:
+          product = Product.objects.get(id=q['product_id'])
+          print('opppppppp:', product)
+          items_context.append ({
+            'product':product,
+            'qty':q  
+          })
+        
+        print('qtyyyyyyyyyyyyyyyyyy',qty)
     except:
         cart_items = None
-    return render(request, 'cart/cart.html', {'cart_items': cart_items})
+    # return render(request, 'cart/cart.html', {'cart_items': cart_items, 'qty':qty})
+    return render(request, 'cart/cart.html', {'items_context': items_context, 'qty':qty} )
 
 
+def increase_quantity(request, item_id):
+  k
 
+def decrease_quantity(request, item_id):
+  j
 
-    
 # @login_required
 # def add_to_cart(request, product_id, user_id, shop_id):
 #     # GET THE PRODUCT INFORMATION

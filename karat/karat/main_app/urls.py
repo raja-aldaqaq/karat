@@ -38,6 +38,8 @@ urlpatterns = [
   # path('add_to_cart/<int:product_id>/<int:user_id>/<int:shop_id>/', views.add_to_cart, name='add_to_cart'),
   path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
   path('view_cart/<int:user_id>/', views.view_cart, name='view_cart'),
+  path('increase_quantity/<int:item_id>/', views.increase_quantity, name='increase_quantity'),
+  path('decrease_quantity/<int:item_id>/', views.decrease_quantity, name='decrease_quantity'),
 
 
 ]
