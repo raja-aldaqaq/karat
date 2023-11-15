@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="title">shop Details</h1>
+
 <div class="shop_list">
-  <div class="box-up" >
+  <div class="page-wrapper">
+    <div class="page-inner">
+        <div class="shop-wrapper">   
+          <div>
+        {% load static %}
+        <img class="shop-pic" height="100px" src="{% static shop.logo|cut:'main_app/static/' %}">
+      </div>
+      <br>
     <span>{{ shop.name }}</span>
     <p>CR Number: {{ shop.CR }}</p>
     <p>Email: {{ shop.Email }}</p>
@@ -10,16 +18,15 @@
     <p>Phone Number: {{ shop.phone }}</p>
 
     <div>
-      <a href="{% url 'shops_update' shop.id %}">Edit</a>
-      <a href="{% url 'shops_delete' shop.id %}">Delete</a>
+      <a  href="{% url 'shops_update' shop.id %}"><button class="btn"> Edit</button></a>
+      <br>
+      <br>
+      <a href="{% url 'shops_delete' shop.id %}"><button class="btn">Delete</button></a>
     </div>
   </div>
 
         </div>
-      <div>
-        {% load static %}
-        <img height="100px" src="{% static shop.logo|cut:'main_app/static/' %}">
-      </div>
+  
       </div>
       </div>
   </div>

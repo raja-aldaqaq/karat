@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="title"> All order </h1>
+  {% for order in order_list %}
+  <div class="page-wrapper">
+    <div class="page-inner">
+
+      <div class="shop-wrapper">
+        <br>
+        <div class="box-up">
+          <span class="size">
+            {{ order.date }}</span>
+          <h1>{{order.total_amount}}</h1>
+          <h1>{{order.user}}</h1>
+          <h1>{{order.shop}}</h1>
+
+
+        </div>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endblock %}

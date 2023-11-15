@@ -24,8 +24,12 @@
   <!-- Add other product details as needed -->
 
   {% if is_owner %}
-  <a href="{% url 'products_update' product.id %}" >Edit</a>
-  <a href="{% url 'products_delete' product.id %}">Delete</a>
+  <a href="{% url 'products_update' product.id %}" ><button class="btn"> Edit</button></a>
+  <br>
+  <br>
+  <a href="{% url 'products_delete' product.id %}"><button class="btn">Delete</button></a>
+  <br>
+  <br>
   {% else %}
     <a href="">Add to cart</a>
   {% endif %}

@@ -51,4 +51,7 @@ urlpatterns = [
   path('decrease_quantity/<int:product_id>/', views.decrease_quantity, name='decrease_quantity'),
 
 
+  path('orders/', views.OrderList.as_view(), name='order_index'), 
+
+
 ]
