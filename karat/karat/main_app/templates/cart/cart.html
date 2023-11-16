@@ -28,7 +28,13 @@
     </li>
     {% endfor %}
   </ul>
-  <a class="continue-shopping-link" href="#">Continue Shopping</a>
+  <p>
+    Free Delivery <br>
+    Total amount: {{total_amount}} <br>
+    VAT% included <br>
+    Payment: Cash on Delivery   <br>
+  </p>
+  <!-- <a class="continue-shopping-link" href="#">Continue Shopping</a> -->
   <a class="checkout-button" href="{% url 'place_order' order_id %}">Place Order</a>
 </div>
 

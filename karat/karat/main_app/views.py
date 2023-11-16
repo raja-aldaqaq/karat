@@ -44,7 +44,7 @@ class shopDetail(DetailView):
 
 def home(request):
   # api_key = "goldapi-is93rloyil90l-io"
-  api_key = "goldapi-is93rloyil90l-i"
+  api_key = "goldapi-y0g18lp0dktwo-io"
   symbol = "XAU"
   curr = "SAR"
 
@@ -252,11 +252,11 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
 
 @login_required
 def add_to_cart(request, product_id):
-    print('fdgchjkcfxdghjnbvdfghjbvgfhjnbvcxdfghjmnbvd')
+    # print('add to caaaaaaaaart')
     current_user = request.user
     product = Product.objects.get(id=product_id)
-    print('current_user',current_user)
-    print('product',product)
+    # print('current_user',current_user)
+    # print('product',product)
     # Check if the product quantity is greater than 0
     if product.quantity_available <= 0:
         messages.warning(request, "Product is out of stock.")
@@ -281,7 +281,7 @@ def add_to_cart(request, product_id):
         print('product shop id',product.shop.id)
         create_order(current_user, product.shop)
         add_item(current_user, product)
-        return redirect('view_cart', user_id=1)
+        return redirect('view_cart', user_id=current_user)
         # current_user.id)
     return redirect('view_cart', user_id=current_user.id)
 
@@ -289,15 +289,15 @@ def add_to_cart(request, product_id):
 
 # @login_required
 def add_item(user, product):
-    print('add iteeeemmmmmmmmmmm u',user)
-    print('add iteeeemmmmmmmmmmm p',product)
+    # print('add iteeeemmmmmmmmmmm usre',user)
+    # print('add iteeeemmmmmmmmmmm product',product)
     cart = Order.objects.get(user=user, ordered=False)
     OrderItem.objects.create(order=cart, product=product, quantity=1, price=0)
 
 # @login_required
 def create_order(user, shop):
-    print("user...........",user)
-    print("shop...........",shop)
+    # print("user...........",user)
+    # print("shop...........",shop)
     existing_order = Order.objects.filter(user=user, shop=shop, ordered=False).first()
     if not existing_order:
         # If no existing order, create a new one
@@ -313,6 +313,7 @@ def view_cart(request, user_id):
         # for item in cart_items:
         items_context =[]
         item_amout=0
+        total_amount=0
         qty = OrderItem.objects.filter(order_id=cart_items[0].order_id).values('product_id').annotate(quantity=Count('product_id'))
         
         for q in qty:
@@ -321,35 +322,41 @@ def view_cart(request, user_id):
           # print(q['quantity'])
           # print('price .................',product.price)
           item_amout = q['quantity']*product.price
-          print('ffffffffff',item_amout)
+          # print('item_amout',item_amout)
           items_context.append ({
             'product':product,
             'qty':q, 
             'item_amout': item_amout  
           })
           order_id=cart_items[0].order_id 
-          return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout, 'order_id':order_id} )
+          total_amount += item_amout
+        # order = Order.objects.get(id=order_id, ordered=False)
+        # order_items = OrderItem.objects.filter(order=order)
+        # total_amount = sum(order_item.price for order_item in order_items)
+          print('total_amount ..........', total_amount)
+        return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout, 'order_id':order_id, 'total_amount':total_amount} )
         # print('qtyyyyyyyyyyyyyyyyyy',qty)
-    except:
+    except Exception as e:
+        print(e)
         cart_items = None
-        return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout ,"order_id":0} )
+        return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout ,"order_id":0, 'total_amount':total_amount} )
     # return render(request, 'cart/cart.html', {'cart_items': cart_items, 'qty':qty})
     # return render(request, 'cart/cart.html', {'items_context': items_context, 'item_amout':item_amout, 'order_id':cart_items[0].order_id} )
 
 
 def increase_quantity(request, product_id):
   current_user = request.user
-  print('iddddddddddd:',product_id)
+  # print('iddddddddddd:',product_id)
   # item_id= OrderItem.objects.get(product_id=product_id).id
   # print('item_id',item_id)
   product_to_add = Product.objects.get(id=product_id)
-  print('product_to_add',product_to_add)
+  # print('product_to_add',product_to_add)
   add_item(current_user, product_to_add)
   return redirect('view_cart', user_id= current_user.id)
 
 def decrease_quantity(request, product_id):
   current_user = request.user
-  print('product_id:',product_id)
+  # print('product_id:',product_id)
   item_to_delete= OrderItem.objects.filter(product_id=product_id).first()
   item_to_delete.delete()
   return redirect('view_cart', user_id= current_user.id)
